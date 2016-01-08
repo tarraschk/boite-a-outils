@@ -32,6 +32,8 @@ gem 'devise'
 gem 'omniauth'
 gem 'omniauth-google-oauth2'
 
+gem 'nationbuilder-rb', require: 'nationbuilder'
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 
