@@ -1,0 +1,25 @@
+<%= form_for(@gadget_file) do |f| %>
+  <% if @gadget_file.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@gadget_file.errors.count, "error") %> prohibited this gadget_file from being saved:</h2>
+
+      <ul>
+      <% @gadget_file.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :url %><br>
+    <%= f.text_field :url %>
+  </div>
+  <div class="field">
+    <%= f.label :html %><br>
+    <%= f.text_area :html %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

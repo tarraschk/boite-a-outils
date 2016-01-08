@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Gadget Files</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Url</th>
+      <th>Html</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @gadget_files.each do |gadget_file| %>
+      <tr>
+        <td><%= gadget_file.url %></td>
+        <td><%= gadget_file.html %></td>
+        <td><%= link_to 'Show', gadget_file %></td>
+        <td><%= link_to 'Edit', edit_gadget_file_path(gadget_file) %></td>
+        <td><%= link_to 'Destroy', gadget_file, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Gadget file', new_gadget_file_path %>
