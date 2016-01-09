@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" hash="1038939344">
+    <data-source source="LOCAL" name="Rails GMail-NationBuilder-CRM: development" uuid="40c58f00-9a0d-4310-95d1-863d8652af6d">
+      <driver-ref>postgresql</driver-ref>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://127.0.0.1:5432/local_aj</jdbc-url>
+      <libraries />
+    </data-source>
+    <data-source source="LOCAL" name="Rails GMail-NationBuilder-CRM: test" uuid="32b96ca7-d8c4-4686-a943-7ee86ded7c9a">
+      <driver-ref>postgresql</driver-ref>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql:db/test.sqlite3</jdbc-url>
+      <libraries />
+    </data-source>
+    <data-source source="LOCAL" name="Rails GMail-NationBuilder-CRM: production" uuid="22cf071c-9f93-411d-8c72-91679033cfa9">
+      <driver-ref>postgresql</driver-ref>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql:db/production.sqlite3</jdbc-url>
+      <libraries />
+    </data-source>
+  </component>
+</project>
+

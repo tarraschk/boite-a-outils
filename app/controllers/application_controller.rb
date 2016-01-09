@@ -12,10 +12,15 @@ class ApplicationController < ActionController::Base
   def after_sign_in_path_for(resource)
     case resource
       when User
-        mails_user_path(resource)
+        dashboard_path
       else
         root_path
     end
+  end
+
+  helper_method :current_person
+  def current_person
+    @current_person ||= current_user && current_user.person
   end
 
 end

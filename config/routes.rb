@@ -1,10 +1,15 @@
 Rails.application.routes.draw do
-  devise_for :users, controllers: { omniauth_callbacks: "omniauth_callbacks" }
+  resources :people
+  devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }
 
   resources :gadget_files
   resources :users do
     get 'mails',    on: :member
   end
+
+  root 'dashboards#dashboard'
+
+  get 'dashboard', to: 'dashboards#dashboard'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

@@ -1,5 +1,3 @@
-# app/models/token.rb
-
 require 'net/http'
 require 'json'
 
