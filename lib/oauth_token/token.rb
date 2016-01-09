@@ -7,8 +7,8 @@ module Token
 
   def to_params
     {refresh_token: refresh_token,
-     client_id:     Rails.application.secrets.google_app_id,
-     client_secret: Rails.application.secrets.google_app_secret,
+     client_id:     ENV['GOOGLE_APP_ID'],
+     client_secret: ENV['GOOGLE_APP_SECRET'],
      grant_type:    'refresh_token'}
   end
 
@@ -38,8 +38,8 @@ module Token
   def google_client
     return @client if @client
     @client = Google::APIClient.new
-    @client.authorization.client_id     = Rails.application.secrets.google_app_id
-    @client.authorization.client_secret = Rails.application.secrets.google_app_secret
+    @client.authorization.client_id     = ENV['GOOGLE_APP_ID']
+    @client.authorization.client_secret = ENV['GOOGLE_APP_SECRET']
     @client.authorization.access_token  = self.access_token
     @client.authorization.refresh_token = self.refresh_token
     @client
