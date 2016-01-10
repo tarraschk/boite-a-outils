@@ -1,10 +1,13 @@
 class PeopleController < ApplicationController
-  before_action :set_person, only: [:show, :edit, :update, :destroy]
+  before_action :set_person, only: [:show, :edit, :update]
 
-  # GET /people
-  # GET /people.json
-  def index
-    @people = Person.all
+  before_action :authorize_person_controller!
+
+  def authorize_person_controller!
+    unless current_person.people_id == @person.id
+      render status: 401 and return
+    end
+    true
   end
 
   # GET /people/1
@@ -51,16 +54,6 @@ class PeopleController < ApplicationController
     end
   end
 
-  # DELETE /people/1
-  # DELETE /people/1.json
-  def destroy
-    @person.destroy
-    respond_to do |format|
-      format.html { redirect_to people_url, notice: 'Person was successfully destroyed.' }
-      format.json { head :no_content }
-    end
-  end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_person
@@ -69,6 +62,6 @@ class PeopleController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def person_params
-      params.require(:person).permit(:people_id, :parent_id, :recruiter_id, :email, :phone_number, :first_name, :last_name)
+      params.require(:person).permit(:recruiter_id, :email, :phone_number, :first_name, :last_name)
     end
 end
