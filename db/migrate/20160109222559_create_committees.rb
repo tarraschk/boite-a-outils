@@ -1,13 +1,11 @@
 class CreateCommittees < ActiveRecord::Migration
   def change
     create_table :committees do |t|
-      t.integer :event_id
+      t.integer :event_id, index: true
       t.string :slug
-      t.string :animator_email
+      t.string :animator_email, index: true
 
       t.timestamps null: false
     end
-    add_index :event_id
-    add_index :animator_email
   end
 end

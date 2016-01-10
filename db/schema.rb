@@ -11,10 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160109111727) do
+ActiveRecord::Schema.define(version: 20160110100727) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "committees", force: :cascade do |t|
+    t.integer  "event_id"
+    t.string   "slug"
+    t.string   "animator_email"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  add_index "committees", ["animator_email"], name: "index_committees_on_animator_email", using: :btree
+  add_index "committees", ["event_id"], name: "index_committees_on_event_id", using: :btree
 
   create_table "gadget_files", force: :cascade do |t|
     t.string   "url"
@@ -54,6 +65,7 @@ ActiveRecord::Schema.define(version: 20160109111727) do
     t.string   "access_token"
     t.string   "refresh_token"
     t.datetime "expires_at"
+    t.boolean  "root"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

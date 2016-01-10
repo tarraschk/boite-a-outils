@@ -24,16 +24,21 @@ class User < ActiveRecord::Base
       if registered_user
         return registered_user
       else
-        User.create(
-            name:           data['name'],
-            provider:       access_token.provider,
-            email:          data['email'],
-            uid:            access_token.uid ,
-            password:       'helloworld',
-            access_token:   access_token['credentials']['token'],
-            refresh_token:  access_token['credentials']['refresh_token'],
-            expires_at:     access_token['credentials']['expired_at']
-        )
+        people = People.find_by(email: data['email'])
+        if people
+          new_user = User.create(
+              name:           data['name'],
+              provider:       access_token.provider,
+              email:          data['email'],
+              uid:            access_token.uid ,
+              password:       'helloworld',
+              access_token:   access_token['credentials']['token'],
+              refresh_token:  access_token['credentials']['refresh_token'],
+              expires_at:     access_token['credentials']['expired_at']
+          )
+          people.update(user: new_user)
+          new_user
+        end
       end
     end
   end
