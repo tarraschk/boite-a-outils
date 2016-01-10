@@ -1,0 +1,10 @@
+<h1>Hello <%= current_person.full_name %></h1>
+
+<h1>Liste des membres du comité</h1>
+
+<% @children.each do |child| %>
+    <div><%= "#{child.full_name}; #{child.email}" %> </div>
+<% end %>
+
+<h1>Responsable régional</h1>
+<div><%= "#{@parent.full_name}; #{@parent.email}" %> </div>

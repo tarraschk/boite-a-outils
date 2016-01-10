@@ -23,7 +23,10 @@ class Person < ActiveRecord::Base
     else
       #client.call(:person, :create, params)
     end
+  end
 
+  def full_name
+    "#{first_name} #{last_name}"
   end
 
 

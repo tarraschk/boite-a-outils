@@ -3,10 +3,10 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  before_action :redirect_to_mail
+  before_action :redirect_to_dashboard
 
-  def redirect_to_mail
-    redirect_to user_omniauth_authorize_path(:google_oauth2) unless user_signed_in? || request.env['REQUEST_PATH'] == '/users/auth/google_oauth2/callback'
+  def redirect_to_dashboard
+    redirect_to dashboard_path unless user_signed_in? || request.env['REQUEST_PATH'] == '/users/auth/google_oauth2/callback'
   end
 
   def after_sign_in_path_for(resource)
