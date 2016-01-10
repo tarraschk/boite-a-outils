@@ -13,6 +13,7 @@ class PeopleController < ApplicationController
   # GET /people/1
   # GET /people/1.json
   def show
+    @nb_person = NationBuilderClient.new.call(:people, :show, id: @person.people_id)
   end
 
   # GET /people/new
