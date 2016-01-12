@@ -4,7 +4,7 @@ class PeopleController < ApplicationController
   before_action :authorize_person_controller!
 
   def authorize_person_controller!
-    unless current_person.people_id == @person.id
+    unless current_person.people_id.in?([@person.parent_id, @person.people_id])
       render status: 401 and return
     end
     true
@@ -23,6 +23,7 @@ class PeopleController < ApplicationController
 
   # GET /people/1/edit
   def edit
+    @nb_person = NationBuilderClient.new.call(:people, :show, id: @person.people_id)
   end
 
   # POST /people

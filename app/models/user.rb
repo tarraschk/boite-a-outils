@@ -24,9 +24,15 @@ class User < ActiveRecord::Base
       if registered_user
         return registered_user
       else
-        people = People.find_by(email: data['email'])
-        if people
-          new_user = User.create(
+        begin
+          nb_people = NationBuilderClient.new.call(:people, :match, email: data['email'])
+        rescue => e
+          Rails.logger.error e
+          nb_people = {}
+        end
+        person = Person.find_by(id: nb_people['person'] && nb_people['person']['id'])
+        if person
+          person.user = User.create(
               name:           data['name'],
               provider:       access_token.provider,
               email:          data['email'],
@@ -36,8 +42,7 @@ class User < ActiveRecord::Base
               refresh_token:  access_token['credentials']['refresh_token'],
               expires_at:     access_token['credentials']['expired_at']
           )
-          people.update(user: new_user)
-          new_user
+          person.save
         end
       end
     end
