@@ -1,0 +1,12 @@
+:concurrency: 5
+development:
+  :concurrency: 30
+  :limits:
+    critical: 30
+    default: 25
+    traces: 20
+
+production:
+  :concurrency: 20
+  :limits:
+    default: 20
