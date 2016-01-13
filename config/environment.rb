@@ -17,5 +17,8 @@ rescue Exception
   puts 'No config/environment_secret.yml file'
 end
 
+Rails.application.secrets.secret_token    = ENV['SECRET_TOKEN']
+Rails.application.secrets.secret_key_base = ENV['SECRET_KEY_BASE']
+
 # Initialize the Rails application.
 Rails.application.initialize!

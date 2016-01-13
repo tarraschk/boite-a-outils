@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   before_action :redirect_to_dashboard
 
   def redirect_to_dashboard
-    redirect_to dashboard_path unless user_signed_in? || request.env['REQUEST_PATH'] == '/users/auth/google_oauth2/callback'
+    redirect_to dashboard_path unless user_signed_in? || request.env['REQUEST_PATH'].in?(['/users/auth/google_oauth2/callback', dashboard_path])
   end
 
   def after_sign_in_path_for(resource)
