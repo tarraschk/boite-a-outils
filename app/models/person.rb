@@ -9,7 +9,12 @@ class Person < ActiveRecord::Base
   has_many :children,     class_name: Person, primary_key: :people_id, foreign_key: :parent_id
   has_many :recruitees,   class_name: Person, primary_key: :people_id, foreign_key: :recruiter_id
 
+  validates :people_id, uniqueness: true
+
   after_create  :send_to_nation_builder, unless: :skip_callbacks
+
+  after_create  :get_parent_id
+
   after_save    :send_to_nation_builder, unless: :skip_callbacks
 
   def send_to_nation_builder
@@ -22,6 +27,12 @@ class Person < ActiveRecord::Base
       #client.call(:person, :update, id: people_id, params)
     else
       #client.call(:person, :create, params)
+    end
+  end
+
+  def get_parent_id
+    if people_id
+      NationBuilderGetParentIdWorker.perform_async(people_id)
     end
   end
 
