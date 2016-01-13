@@ -9,7 +9,7 @@ class NationBuilderSyncWorker
     params = updated_at ? [:search, updated_since: updated_at, limit: 100] : [:index, limit: 100]
     paginator = NationBuilder::Paginator.new(client, client.call(:people, *params))
     Person.skip_callbacks = true
-    while paginator.next?
+    while paginator.next? && Person.count < 200
       create_people_from_result(paginator.body['results'])
       paginator = paginator.next
     end

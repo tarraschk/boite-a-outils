@@ -1,0 +1,15 @@
+<div class="row">
+  <div class="col-xs-12">
+    <div class="text-center">
+      <%= image_tag("logo_baseline.png", alt: "Alain Juppé 2017 Pour La France", style: "width: 50%;") %>
+    </div>
+    <% if user_signed_in? %>
+      <div class="text-center">
+        EMPLACEMENT MENU !!!
+        <p>Signed in as <%= current_user.name %>. Not you?
+          <%= link_to "Sign out", destroy_user_session_path,:method => :delete %></p>
+      </div>
+    <% end %>
+  </div>
+</div>
+<br/>

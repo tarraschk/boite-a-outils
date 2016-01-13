@@ -1,1 +1,12 @@
-<%= link_to "Sign in with Google", user_omniauth_authorize_path(:google_oauth2) %>
+<div class="col-xs-12 text-center">
+  <div style="display:table;width:100%;height:100%;">
+    <div style="display:table-cell;vertical-align:middle;">
+      <div style="margin-left:auto;margin-right:auto;">
+        <h1>Bienvenue sur l'espace Animateurs d'AJ pour la France</h1>
+        <p>Veuillez vous connecter à l'aide de vos identifiants "juppe-2017.fr" pour accéder à votre espace en ligne.</p>
+        <br/>
+        <%= link_to "CONNEXION", user_omniauth_authorize_path(:google_oauth2), class: "btn btn-primary btn-lg" %>
+      </div>
+    </div>
+  </div>
+</div>

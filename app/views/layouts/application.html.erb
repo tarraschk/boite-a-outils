@@ -1,21 +1,34 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>StaticFiles</title>
+  <title>Alain Juppé - CRM</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
 
-<% if user_signed_in? %>
-    Signed in as <%= current_user.name %>. Not you?
-    <%= link_to "Sign out", destroy_user_session_path,:method => :delete %>
-<% end %>
+<div id="content" class="container">
+  <div class="row">
+    <div class="col-xs-12">
 
+      <%= render 'layouts/header' %>
 
-<div>
-<%= yield %>
+      <div class="row">
+        <%= yield %>
+      </div>
+    </div>
+  </div>
 </div>
+
+<footer id="footer" class="footer container-fluid">
+  <div class="row">
+    <div class="col-xs-12 text-center">
+      <small class="text-muted">© CAPAJ POUR LA FRANCE - Développé par Maxime Alay-Eddine et Vincent Algayres - techteam@alainjuppe2017.fr</small>
+    </div>
+  </div>
+</footer>
+
 </body>
 </html>
