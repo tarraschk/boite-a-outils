@@ -30,7 +30,7 @@ class User < ActiveRecord::Base
           Rails.logger.error e
           nb_people = {}
         end
-        person = Person.find_by(id: nb_people['person'] && nb_people['person']['id'])
+        person = Person.find_by(people_id: nb_people['person'] && nb_people['person']['id'])
         if person
           person.user = User.create(
               name:           data['name'],
