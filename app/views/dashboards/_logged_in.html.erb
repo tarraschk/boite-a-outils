@@ -1,5 +1,7 @@
-<h1>Hello <%= current_person.full_name %></h1>
-
+<div id="content-sidebar" class="col-xs-4">
+  MENU
+  -
+  LISTE
 <h1>Liste des membres du comité</h1>
 
 <% @children.each do |child| %>
@@ -8,3 +10,7 @@
 
 <h1>Responsable régional</h1>
 <div><%= "#{@parent.full_name}; #{@parent.email}" %> </div>
+</div>
+<div id="content-details" class="col-xs-8">
+  FICHE et DASHBOARD
+</div>

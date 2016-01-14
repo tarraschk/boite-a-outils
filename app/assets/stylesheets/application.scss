@@ -21,6 +21,18 @@ body {
   padding: 0 0 60px;
 }
 
+#content-sidebar {
+  border-right: solid $gray-lighter 1px;
+}
+
+.btn-xs {
+  border: none;
+}
+
+button.btn-xs:hover {
+  background-color: transparentize(#002855, 0.9);
+}
+
 /* Set the fixed height of the footer here */
 #footer {
   height: 60px;

@@ -5,9 +5,11 @@
     </div>
     <% if user_signed_in? %>
       <div class="text-center">
-        EMPLACEMENT MENU !!!
-        <p>Signed in as <%= current_user.name %>. Not you?
-          <%= link_to "Sign out", destroy_user_session_path,:method => :delete %></p>
+        <%= link_to '<button type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Accueil</button>'.html_safe, dashboard_path %>
+        <%= link_to '<button type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Ecrire à tous les membres de mon comité</button>'.html_safe, "mailto:COMITE@alainjuppe2017.fr" %>
+        <%= link_to '<button type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Contacter mon référent régional</button>'.html_safe, "mailto:#{@parent.email}" %>
+        <%= link_to '<button type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Contacter le support</button>'.html_safe, "mailto:techteam@alainjuppe2017.fr" %>
+        <%= link_to '<button type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Déconnexion</button>'.html_safe, destroy_user_session_path, :method => :delete %>
       </div>
     <% end %>
   </div>
