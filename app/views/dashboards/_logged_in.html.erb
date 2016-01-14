@@ -1,16 +1,11 @@
 <div id="content-sidebar" class="col-xs-4">
-  MENU
-  -
-  LISTE
-<h1>Liste des membres du comité</h1>
+
+<h1>Mes contacts</h1>
 
 <% @children.each do |child| %>
     <div><%= "#{child.full_name}; #{child.email}" %> </div>
 <% end %>
 
-<h1>Responsable régional</h1>
-<div><%= "#{@parent.full_name}; #{@parent.email}" %> </div>
-</div>
 <div id="content-details" class="col-xs-8">
-  FICHE et DASHBOARD
+
 </div>
