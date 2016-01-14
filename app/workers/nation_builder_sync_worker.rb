@@ -20,8 +20,11 @@ class NationBuilderSyncWorker
   end
 
   def create_people_from_result(people_list)
-    people_list.each do |person|
-      Person.create(person.slice(*%w(id email first_name last_name recruiter_id phone_number parent_id)).tap {|h| h['people_id'] = h.delete('id')})
+    already_done = Person.where(people_id: people_list.map{|p| p['id']}).pluck(:people_id)
+    to_do = people_list.map {|person| person.slice(*%w(id email first_name last_name recruiter_id phone_number parent_id))}.map {|h| already_done.include?(h['id']) ? nil : (h['people_id'] = h.delete('id'); h)}.compact
+    ActiveRecord::Base.transaction do
+      Person.create(to_do)
     end
+    ActiveRecord::Base.clear_active_connections!
   end
 end

@@ -9,7 +9,7 @@ class Person < ActiveRecord::Base
   has_many :children,     class_name: Person, primary_key: :people_id, foreign_key: :parent_id
   has_many :recruitees,   class_name: Person, primary_key: :people_id, foreign_key: :recruiter_id
 
-  validates :people_id, uniqueness: true
+  validates :people_id, uniqueness: true, unless: :skip_callbacks
 
   after_create  :send_to_nation_builder, unless: :skip_callbacks
 
