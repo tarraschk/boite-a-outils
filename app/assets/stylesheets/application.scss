@@ -1,6 +1,7 @@
 /* Thème Alain Juppé */
 /* Bleu foncé 002855, Rouge E4002B */
 $brand-primary: lighten(#002855, 10%) !default;
+$bleu-juppe: #002855;
 
 @import "bootstrap-sprockets";
 @import "bootstrap";
@@ -8,6 +9,7 @@ $brand-primary: lighten(#002855, 10%) !default;
 html,
 body {
   height: 100%;
+  color: black;
   /* The html and body elements cannot have any padding or margin. */
 }
 
@@ -24,14 +26,35 @@ body {
 
 #content-sidebar {
   border-right: solid $gray-lighter 1px;
+
+  #people {
+    height: 500px;
+    overflow-y: scroll;
+    a {
+      text-decoration: none;
+      color: black;
+    }
+    li.media {
+      padding: 5px 10px;
+    }
+    li.media:hover {
+      background-color: $gray-lighter;
+    }
+    li.media.selected {
+      background-color: darken($gray-lighter, 10%);
+    }
+  }
+
 }
 
-.btn-xs {
-  border: none;
-}
+#header {
+  .btn-sm {
+    border: none;
+  }
 
-button.btn-xs:hover {
-  background-color: transparentize(#002855, 0.9);
+  button.btn-sm:hover {
+    background-color: transparentize(#002855, 0.9);
+  }
 }
 
 /* Set the fixed height of the footer here */
