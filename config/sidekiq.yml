@@ -7,6 +7,6 @@ development:
     traces: 20
 
 production:
-  :concurrency: 20
+  :concurrency: 9
   :limits:
-    default: 20
+    default: 9
