@@ -1,72 +1,46 @@
-<p>
-  <b>First name:</b>
-  <%= first_name %>
-</p>
+<div class="row">
+    <div class="col-xs-3">
+        <img class="media-object img-circle" src="<%= profile_image_url_ssl %>" alt="Photo de <%= full_name %>" width="64" height="64" />
+        <br/>
+        <h4>Actions</h4>
+        <a id="button-email-person-contact" href="<%= email %>" target="_blank"><button type="button" class="btn btn-default btn-md" target="_blank"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Envoyer un Email</button></a>
+    </div>
+    <div class="col-xs-9">
+        <h4>Informations</h4>
+        <p>
+            <b>Prénom :</b>
+            <%= first_name %>
+        </p>
 
-<p>
-  <b>Last name:</b>
-  <%= last_name %>
-</p>
+        <p>
+            <b>Nom :</b>
+            <%= last_name %>
+        </p>
 
-<p>
-  <b>Email:</b>
-  <%= email %>
-</p>
+        <p>
+            <b>Email:</b>
+            <%= email %>
+        </p>
 
-<p>
-  <b>Phone:</b>
-  <%= phone %>
-</p>
+        <p>
+            <b>Téléphone :</b>
+            <%= phone %>
+        </p>
 
-<p>
-  <b>Mobile:</b>
-  <%= mobile %>
-</p>
+        <p>
+            <b>Mobile :</b>
+            <%= mobile %>
+        </p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
 
-<p>
-  <b>Address address1:</b>
-  <%= address_address1 %>
-</p>
+    </div>
+</div>
 
-<p>
-  <b>Address address2:</b>
-  <%= address_address2 %>
-</p>
-
-<p>
-  <b>Address address3:</b>
-  <%= address_address3 %>
-</p>
-
-<p>
-  <b>Address city:</b>
-  <%= address_city %>
-</p>
-
-<p>
-  <b>Address state:</b>
-  <%= address_state %>
-</p>
-
-<p>
-  <b>Address zip:</b>
-  <%= address_zip %>
-</p>
-
-<p>
-  <b>Address country code:</b>
-  <%= address_country_code %>
-</p>
-
-<p>
-  <b>Address lat:</b>
-  <%= address_lat %>
-</p>
-
-<p>
-  <b>Address lng:</b>
-  <%= address_lng %>
-</p>
-
-
-<a href="#/index">Back</a>
+<script type="text/javascript">
+    $(function() {
+        $("#button-email-person-contact").attr("href", window.generateEmailLink($("#button-email-person-contact").attr("href")));
+    });
+</script>

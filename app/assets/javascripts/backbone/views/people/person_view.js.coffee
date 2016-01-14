@@ -5,13 +5,20 @@ class StaticFiles.Views.People.PersonView extends Backbone.View
 
   events:
     "click .destroy" : "destroy"
+    "click" : "select"
 
-  tagName: "tr"
+  select: () ->
+    selector = "a[data-id="+@model.id+"]"
+    $("#people").find("li").removeClass("selected")
+    $(selector).children("li").addClass("selected")
+    window.personView = new StaticFiles.Views.People.ShowView({el: '#person', model: @model});
+    window.personView.render()
+    console.log window.personView
+    return false
 
   destroy: () ->
     @model.destroy()
     this.remove()
-
     return false
 
   render: ->

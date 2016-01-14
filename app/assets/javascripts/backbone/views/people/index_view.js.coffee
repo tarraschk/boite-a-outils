@@ -5,15 +5,17 @@ class StaticFiles.Views.People.IndexView extends Backbone.View
 
   initialize: () ->
     @collection.bind('reset', @addAll)
+    console.log @collection
 
   addAll: () =>
     @collection.each(@addOne)
 
   addOne: (person) =>
     view = new StaticFiles.Views.People.PersonView({model : person})
-    @$("tbody").append(view.render().el)
+    @$("ul").append(view.render().el)
 
   render: =>
+    @$el.parent().children(".loading").remove()
     @$el.html(@template(people: @collection.toJSON() ))
     @addAll()
 
