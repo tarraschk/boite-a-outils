@@ -4,16 +4,28 @@ class PeopleController < ApplicationController
   before_action :authorize_person_controller!
 
   def authorize_person_controller!
-    unless current_person.people_id.in?([@person.parent_id, @person.people_id])
-      render status: 401 and return
+    if @person
+      unless current_person.people_id.in?([@person.parent_id, @person.people_id])
+        render status: 401 and return
+      end
     end
     true
+  end
+
+  def index
+    @children = Array.new
+    current_person.children.each do |child|
+      nb_person = NationBuilderClient.new.call(:people, :show, id: child.people_id)
+      @children << nb_person["person"]
+    end
+    render json: @children
   end
 
   # GET /people/1
   # GET /people/1.json
   def show
     @nb_person = NationBuilderClient.new.call(:people, :show, id: @person.people_id)
+    render json: @nb_person
   end
 
   # GET /people/new
