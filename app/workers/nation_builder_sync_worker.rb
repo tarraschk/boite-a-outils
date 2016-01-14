@@ -15,6 +15,7 @@ class NationBuilderSyncWorker
     end
 
     last_synchronization.save
+    Person.skip_callbacks = false
 
   end
 
