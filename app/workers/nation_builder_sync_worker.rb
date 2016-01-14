@@ -28,7 +28,8 @@ class NationBuilderSyncWorker
   end
 
   def create_people_from_result(people_list)
-    Rails.logger.info "       #############                    current people id #{people_list.first['id']}                 ################"
+    logger.info "       #############                    current people id #{people_list.first['id']}                 ################"
+    puts        "       #############                    current people id #{people_list.first['id']}                 ################"
     already_done = Person.where(people_id: people_list.map{|p| p['id']}).pluck(:people_id)
     to_do = people_list.map {|person| person.slice(*%w(id email first_name last_name recruiter_id phone_number parent_id))}.map {|h| already_done.include?(h['id']) ? nil : (h['people_id'] = h.delete('id'); h)}.compact
     ActiveRecord::Base.transaction do
