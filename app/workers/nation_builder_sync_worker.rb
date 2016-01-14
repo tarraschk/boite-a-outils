@@ -20,7 +20,7 @@ class NationBuilderSyncWorker
 
   def create_people_from_result(people_list)
     people_list.each do |person|
-      Person.create(person.slice(*%w(id email first_name last_name recruiter_id phone_number parend_id)).tap {|h| h['people_id'] = h.delete('id')})
+      Person.create(person.slice(*%w(id email first_name last_name recruiter_id phone_number parent_id)).tap {|h| h['people_id'] = h.delete('id')})
     end
   end
 end
