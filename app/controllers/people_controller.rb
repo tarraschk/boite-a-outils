@@ -13,11 +13,12 @@ class PeopleController < ApplicationController
   end
 
   def index
-    @children = Array.new
-    current_person.children.each do |child|
-      nb_person = NationBuilderClient.new.call(:people, :show, id: child.people_id)
-      @children << nb_person["person"]
-    end
+    @children = current_person.children
+    #@children = Array.new
+    #current_person.children.each do |child|
+    #  nb_person = NationBuilderClient.new.call(:people, :show, id: child.people_id)
+    #  @children << nb_person["person"]
+    #end
     render json: @children
   end
 
@@ -25,7 +26,9 @@ class PeopleController < ApplicationController
   # GET /people/1.json
   def show
     @nb_person = NationBuilderClient.new.call(:people, :show, id: @person.people_id)
-    render json: @nb_person
+    @nb_person["person"]["people_id"] = @person.people_id
+    @nb_person["person"]["original_id"] = @person.id
+    render json: @nb_person["person"]
   end
 
   # GET /people/new
