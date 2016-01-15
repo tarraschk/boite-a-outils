@@ -8,6 +8,8 @@ class StaticFiles.Views.People.PersonView extends Backbone.View
     "click" : "select"
 
   select: () ->
+    $("#dashboard").addClass("hidden")
+    $("#person").removeClass("hidden")
     selector = "a[data-id="+@model.id+"]"
     $("#people").find("li").removeClass("selected")
     $(selector).children("li").addClass("selected")
