@@ -20,13 +20,15 @@ class Person < ActiveRecord::Base
   def send_to_nation_builder
     client = NationBuilderClient.new
 
-    params = {
-        person: attributes.slice(*%w(email first_name last_name phone_number))
-    }
+    params = attributes.slice(*%w(email first_name last_name))
+
     if people_id
-      #client.call(:person, :update, id: people_id, params)
+      client.call(:people, :update, id: people_id, person: params)
     else
-      #client.call(:person, :create, params)
+      r = client.call(:people, :create, person: params)
+      Person.skip_callbacks = true
+      update(people_id: r['person']['id'])
+      Person.skip_callbacks = false
     end
   end
 
