@@ -18,17 +18,23 @@ class Person < ActiveRecord::Base
   after_save    :send_to_nation_builder, unless: :skip_callbacks
 
   def send_to_nation_builder
-    client = NationBuilderClient.new
 
-    params = attributes.slice(*%w(email first_name last_name))
+    if changed.map(&:to_s).include?('contacted')
+      puts "TODO do synchro robot"
+    end
 
-    if people_id
-      client.call(:people, :update, id: people_id, person: params)
-    else
-      r = client.call(:people, :create, person: params)
-      Person.skip_callbacks = true
-      update(people_id: r['person']['id'])
-      Person.skip_callbacks = false
+    unless (changed.map(&:to_s) & %w(email first_name last_name)).empty?
+      client = NationBuilderClient.new
+      params = attributes.slice(*%w(email first_name last_name))
+
+      if people_id
+        client.call(:people, :update, id: people_id, person: params)
+      else
+        r = client.call(:people, :create, person: params)
+        Person.skip_callbacks = true
+        update(people_id: r['person']['id'])
+        Person.skip_callbacks = false
+      end
     end
   end
 
