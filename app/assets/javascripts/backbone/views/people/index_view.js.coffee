@@ -5,7 +5,6 @@ class StaticFiles.Views.People.IndexView extends Backbone.View
 
   initialize: () ->
     @collection.bind('reset', @addAll)
-    console.log @collection
 
   addAll: () =>
     @collection.each(@addOne)
