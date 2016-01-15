@@ -22,6 +22,13 @@ body {
   margin: 0 auto -60px;
   /* Pad bottom by footer height */
   padding: 0 0 60px;
+
+  #person {
+    button {
+      margin: 10px 10px;
+    }
+  }
+
 }
 
 #content-sidebar {
