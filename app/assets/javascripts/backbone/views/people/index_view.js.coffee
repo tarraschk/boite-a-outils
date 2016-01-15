@@ -15,7 +15,7 @@ class StaticFiles.Views.People.IndexView extends Backbone.View
     @$("ul").append(view.render().el)
 
   render: =>
-    @$el.parent().children(".loading").remove()
+    @$el.parent().children(".loading").addClass("hidden")
     @$el.html(@template(people: @collection.toJSON() ))
     @addAll()
 
