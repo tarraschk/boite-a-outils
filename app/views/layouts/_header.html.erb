@@ -2,6 +2,11 @@
   <div class="col-xs-12">
     <div class="text-center">
       <%= image_tag("logo_baseline.png", alt: "Alain Juppé 2017 Pour La France", style: "width: 50%;") %>
+      <div id="alert-messages">
+        <% flash.each do |key, value| %>
+            <div class="alert alert-<%= key %>"><%= value %></div>
+        <% end %>
+      </div>
     </div>
     <% if user_signed_in? %>
       <div class="text-center">
