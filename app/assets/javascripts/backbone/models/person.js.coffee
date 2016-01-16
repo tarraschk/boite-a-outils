@@ -43,12 +43,8 @@ class StaticFiles.Collections.PeopleCollection extends Backbone.Collection
       if !person.get("original_id")
         person.fetch
           success: (person, response) ->
-            console.log person
             window.peopleCollection.add(person, {merge: true})
             window.peopleView.render()
-            console.log window.location.hash.substr(1)
-            console.log person.get("people_id")
-            console.log parseInt(window.location.hash.substr(1)) == person.get("people_id")
             if parseInt(window.location.hash.substr(1)) == person.get("people_id")
               window.personView = new StaticFiles.Views.People.ShowView({el: '#person', model: person})
               window.personView.render()
