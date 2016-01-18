@@ -2,6 +2,7 @@
 /* Bleu foncé 002855, Rouge E4002B */
 $brand-primary: lighten(#002855, 10%) !default;
 $bleu-juppe: #002855;
+$rouge-juppe: #e4002b;
 
 @import "bootstrap-sprockets";
 @import "bootstrap";
@@ -43,6 +44,9 @@ body {
     }
     li.media {
       padding: 5px 10px;
+    }
+    li.media.contacted-false {
+      background-color: transparentize($rouge-juppe, 0.95);
     }
     li.media:hover {
       background-color: $gray-lighter;
