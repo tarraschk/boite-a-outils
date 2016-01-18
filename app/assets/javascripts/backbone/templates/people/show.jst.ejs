@@ -5,6 +5,7 @@
         <h4>Actions</h4>
         <a id="button-email-person-contact" href="<%= email %>" target="_blank"><button type="button" class="btn btn-default btn-md" target="_blank"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Envoyer un Email</button></a>
         <button type="button" class="btn btn-default btn-md disabled" target="_blank"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Editer (bientôt disponible)</button>
+        <a id="button-contacted-person"><button type="button" class="btn btn-default btn-md"><span class="glyphicon glyphicon-<%if(contacted){%>check<%}else{%>unchecked<%}%>" aria-hidden="true"></span> Personne contactée</button></a>
     </div>
     <div class="col-xs-8">
         <h4>Informations</h4>

@@ -19,9 +19,16 @@ class StaticFiles.Models.Person extends Backbone.Model
     address_lat: null
     address_lng: null
     profile_image_url_ssl: "images/loading.gif"
+    checked: false
 
   initialize: ->
-    this.set("full_name", this.get("first_name") + " " + this.get("last_name"))
+    if this.get("email") == null
+      this.set("full_name", "Erreur dans la fiche") # Normalement chaque fiche a au moins une adresse mail
+    else
+      if (this.get("first_name") == null) || (this.get("last_name") == null) || (this.get("first_name") == "") || (this.get("last_name") == "")
+        this.set("full_name", "Fiche à compléter ("+this.get("email")+")") # Certaines n'ont pas de Nom / Prénom
+      else
+        this.set("full_name", this.get("first_name") + " " + this.get("last_name"))
     ###this.set({
       "address_address1": this.get("primary_address")["address1"],
       "address_address2": this.get("primary_address")["address2"],
@@ -43,8 +50,12 @@ class StaticFiles.Collections.PeopleCollection extends Backbone.Collection
       if !person.get("original_id")
         person.fetch
           success: (person, response) ->
+            if person.get("full_name") == "" # Cas des fiches NB sans Nom / Prénom (qui sont courantes !)
+              person.set("full_name", "Fiche à compléter ("+person.get("email")+")")
             window.peopleCollection.add(person, {merge: true})
+            window.peopleView.unbind()
             window.peopleView.render()
             if parseInt(window.location.hash.substr(1)) == person.get("people_id")
               window.personView = new StaticFiles.Views.People.ShowView({el: '#person', model: person})
+              window.personView.unbind()
               window.personView.render()

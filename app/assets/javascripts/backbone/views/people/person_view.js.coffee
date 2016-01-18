@@ -14,21 +14,19 @@ class StaticFiles.Views.People.PersonView extends Backbone.View
     selector = "a[data-id="+@model.id+"]"
     $("#people").find("li").removeClass("selected")
     $(selector).children("li").addClass("selected")
-    if @model.get("original_id")
-      window.personView = new StaticFiles.Views.People.ShowView({el: '#person', model: @model})
-      window.personView.render()
-      $("#person").removeClass("hidden")
-      $("#person-loading").addClass("hidden")
-    else
-      window.personView = new StaticFiles.Views.People.ShowView({el: '#person', model: @model})
-      window.personView.render()
-      $("#person").removeClass("hidden")
-      $("#person-loading").addClass("hidden")
+    if window.personView != undefined
+      window.personView.unbind()
+    window.personView = new StaticFiles.Views.People.ShowView({el: '#person', model: @model})
+    window.personView.render()
+    $("#person").removeClass("hidden")
+    $("#person-loading").addClass("hidden")
+    if !@model.get("original_id") #this model has not yet been fetched from NationBuilder
       @model.fetch
         success: (person, response) ->
-          console.log person
           window.peopleCollection.add(person, {merge: true})
+          window.peopleView.unbind()
           window.peopleView.render()
+          window.personView.unbind()
           window.personView = new StaticFiles.Views.People.ShowView({el: '#person', model: person})
           window.personView.render()
     return true

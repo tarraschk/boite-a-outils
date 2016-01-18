@@ -1,11 +1,11 @@
 <a href="#<%= people_id %>" data-id="<%= id %>">
-    <li class="media">
+    <li class="media contacted-<%if(contacted){%>true<%}else{%>false<%}%>">
         <div class="media-left">
             <img class="media-object img-circle" src="<%= profile_image_url_ssl %>" alt="Photo de <%= full_name %>" width="32" height="32" />
         </div>
         <div class="media-body">
             <h4 class="media-heading"><%= full_name %></h4>
-            <small>Membre du comité</small>
+            <small>Membre du comité</small> <%if(!contacted){%><small class="label label-primary pull-right">A CONTACTER</small><%}%>
         </div>
     </li>
 </a>

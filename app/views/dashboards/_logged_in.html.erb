@@ -61,7 +61,10 @@
 
     window.params = {
       email: "<%= current_user.email %>",
-      baseUrl: "https://mail.google.com/mail/?authuser=<%= current_user.email %>&view=cm&fs=1&to="
+      baseUrl: "https://mail.google.com/mail/?authuser=<%= current_user.email %>&view=cm&fs=1&to=",
+      semaphore: {
+        updates: false
+      }
     };
 
     window.functionsAjxCrm = {
