@@ -15,20 +15,20 @@
   <div id="dashboard">
     <h3>Statut de mon comité</h3>
     <div class="row">
-      <div class="col-xs-4 text-center">
+      <div id="dashboard-stats-1" class="col-xs-4 text-center">
         <i class="glyphicon glyphicon-user" style="font-size: 50px;"></i>
         <h5><%= @children.count %></h5>
         <p>Membres dans mon comité</p>
       </div>
-      <div class="col-xs-4 text-center">
+      <div id="dashboard-stats-2" class="col-xs-4 text-center">
         <i class="glyphicon glyphicon-ok" style="font-size: 50px;"></i>
-        <h5><%= @children.count %></h5>
+        <h5><%= @children.where("contacted = ?", true).count %></h5>
         <p>Membres contactés</p>
       </div>
-      <div class="col-xs-4 text-center">
+      <div id="dashboard-stats-3" class="col-xs-4 text-center">
         <i class="glyphicon glyphicon-flash" style="font-size: 50px;"></i>
-        <h5>10</h5>
-        <p>Actions de terrain réalisées</p>
+        <h5>1</h5>
+        <p>Objectif en cours</p>
       </div>
     </div>
     <h3>Mes objectifs</h3>
@@ -72,6 +72,11 @@
         $("#dashboard").removeClass("hidden");
         $("#person").addClass("hidden");
         $("#people").find("li").removeClass("selected");
+        $.getJSON('/people', function( data ) {
+          $("#dashboard-stats-2 > h5").html((data.filter(function (el) {
+            return el.contacted
+          }).length));
+        });
       }
     }
 
