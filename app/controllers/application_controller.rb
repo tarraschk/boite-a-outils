@@ -23,9 +23,4 @@ class ApplicationController < ActionController::Base
     @current_person ||= current_user && current_user.person
   end
 
-  rescue_from Exception do |exception|
-    Rails.logger.info exception
-    render text: 'SORRY NOT WORKING'
-  end
-
 end
