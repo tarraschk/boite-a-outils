@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
 
   rescue_from Exception do |exception|
     Rails.logger.info exception
-    render 'public/500'
+    render text: 'SORRY NOT WORKING'
   end
 
 end
