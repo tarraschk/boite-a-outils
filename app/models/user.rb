@@ -43,6 +43,7 @@ class User < ActiveRecord::Base
               expires_at:     access_token['credentials']['expired_at']
           )
           person.save
+          return person.user
         end
       end
     end
