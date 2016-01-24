@@ -23,9 +23,9 @@ class Person < ActiveRecord::Base
       puts "TODO do synchro robot"
     end
 
-    unless (changed.map(&:to_s) & %w(email first_name last_name parent_id)).empty?
+    unless (changed.map(&:to_s) & %w(email first_name last_name parent_id phone mobile)).empty?
       client = NationBuilderClient.new
-      params = attributes.slice(*%w(email first_name last_name parent_id))
+      params = attributes.slice(*%w(email first_name last_name parent_id phone mobile))
 
       if people_id
         client.call(:people, :update, id: people_id, person: params)
