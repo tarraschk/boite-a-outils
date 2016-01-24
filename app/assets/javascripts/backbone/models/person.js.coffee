@@ -19,7 +19,7 @@ class StaticFiles.Models.Person extends Backbone.Model
     address_lat: null
     address_lng: null
     profile_image_url_ssl: "images/loading.gif"
-    checked: false
+    crm_checked: false
 
   initialize: ->
     if this.get("email") == null

@@ -6,6 +6,7 @@ class StaticFiles.Views.People.PersonView extends Backbone.View
   events:
     "click .destroy" : "destroy"
     "click" : "select"
+    "click input[name='people-checkbox']" : "check"
 
   select: () ->
     $("#dashboard").addClass("hidden")
@@ -30,6 +31,9 @@ class StaticFiles.Views.People.PersonView extends Backbone.View
           window.personView = new StaticFiles.Views.People.ShowView({el: '#person', model: person})
           window.personView.render()
     return true
+
+  check: () ->
+    @model.set("crm_checked", !@model.get("crm_checked"))
 
   destroy: () ->
     @model.destroy()
