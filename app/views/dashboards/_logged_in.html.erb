@@ -1,6 +1,11 @@
 <div id="content-sidebar" class="col-xs-12 col-sm-4">
 
   <h1>Mes contacts</h1>
+  <div class="text-center">
+    <%= link_to '<button type="button" class="btn btn-default btn-lg" data-toggle="tooltip" data-placement="bottom" title="Envoyer un mail à tous les membres de mon comité"><span class="glyphicon glyphicon-send" aria-hidden="true"></span></button>'.html_safe, "#{current_user.email}&bcc=#{@children.map(&:email).join(",")}", id: "button-email-comite-contact", target: "_blank" %>
+    <%= link_to '<button type="button" class="btn btn-default btn-lg" data-toggle="tooltip" data-placement="bottom" title="Envoyer un mail aux personnes cochées ci-dessous"><span class="glyphicon glyphicon-list" aria-hidden="true"></span></button>'.html_safe, "#{current_user.email}&bcc=#{@children.map(&:email).join(",")}", id: "button-email-select-contact", target: "_blank" %>
+    <br/><br/>
+  </div>
   <div class="text-center loading">
     <%= image_tag "loading.gif", class: "loading", width: "64", height:"64" %>
     <p><small>Récupération des données...</small></p>
@@ -93,6 +98,8 @@
         window.functionsAjxCrm.getHome();
         return false;
       });
+
+      $('[data-toggle="tooltip"]').tooltip()
     });
 
     window.peopleCollection = new StaticFiles.Collections.PeopleCollection();
