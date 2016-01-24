@@ -101,7 +101,7 @@ class PeopleController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def person_params
-      permit_list = [:recruiter_id, :email, :mobile, :first_name, :last_name, :contacted, :mandat, :support_level, :tags, primary_address: [:address1, :zip, :city]]
+      permit_list = [:recruiter_id, :email, :phone, :mobile, :first_name, :last_name, :contacted, :mandat, :support_level, :tags, primary_address: [:address1, :zip, :city]]
       permit_list << :parent_id unless @person
       params.require(:person).permit(*permit_list)
     end
