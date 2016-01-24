@@ -25,6 +25,8 @@ class NationBuilderSyncWorker
     ActiveRecord::Base.record_timestamps = true
     Person.skip_callbacks = false
 
+    NationBuilderSyncWorker.perform_async
+
   end
 
   def create_people_from_result(people_list)
