@@ -25,10 +25,33 @@ class PeopleController < ApplicationController
   # GET /people/1
   # GET /people/1.json
   def show
-    @nb_person = NationBuilderClient.new.call(:people, :show, id: @person.people_id)
-    @nb_person["person"]["people_id"] = @person.people_id
-    @nb_person["person"]["original_id"] = @person.id
-    render json: @nb_person["person"]
+    @nb_person = NationBuilderClient.new.call(:people, :show, id: @person.people_id)['person']
+    @nb_person['people_id']   = @person.people_id
+    @nb_person['original_id'] = @person.id
+
+    Person.skip_callbacks = true
+    person = Person.find_or_initialize_by(people_id: @nb_person['people_id'])
+    person.email          = @nb_person['primary_email']
+    person.mobile         = @nb_person['mobile']
+    person.first_name     = @nb_person['first_name']
+    person.last_name      = @nb_person['last_name']
+    person.support_level  = @nb_person['support_level']
+    person.tags           = @nb_person['tags']
+    person.mandat         = @nb_person['tags']
+
+    person.save
+
+    person.primary_address ||= Address.new
+    person.primary_address.address1
+    person.primary_address.city
+    person.primary_address.zip
+    person.primary_address.save
+
+
+
+    Person.skip_callbacks = false
+
+    render json: @nb_person['person']
   end
 
   # GET /people/new
@@ -80,9 +103,9 @@ class PeopleController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def person_params
       if @person
-        params.require(:person).permit(:recruiter_id, :email, :phone, :first_name, :last_name, :contacted) # it's an update, no update parent_id
+        params.require(:person).permit(:recruiter_id, :email, :mobile, :first_name, :last_name, :contacted) # it's an update, no update parent_id
       else
-        params.require(:person).permit(:recruiter_id, :email, :phone, :first_name, :last_name, :contacted, :parent_id)
+        params.require(:person).permit(:recruiter_id, :email, :mobile, :first_name, :last_name, :contacted, :parent_id)
       end
     end
 end

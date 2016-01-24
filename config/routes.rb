@@ -1,6 +1,7 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
+  resources :addresses
   resources :people
   devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }
 

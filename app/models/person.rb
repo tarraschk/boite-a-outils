@@ -9,6 +9,8 @@ class Person < ActiveRecord::Base
   has_many :children,     class_name: Person, primary_key: :people_id, foreign_key: :parent_id
   has_many :recruitees,   class_name: Person, primary_key: :people_id, foreign_key: :recruiter_id
 
+  has_one :primary_address, class_name: Address, foreign_key: :person_id
+
   validates :people_id, uniqueness: true, unless: :skip_callbacks
 
   after_create  :send_to_nation_builder, unless: :skip_callbacks
@@ -36,6 +38,7 @@ class Person < ActiveRecord::Base
         Person.skip_callbacks = false
       end
     end
+
   end
 
   def get_parent_id
