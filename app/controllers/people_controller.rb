@@ -33,6 +33,7 @@ class PeopleController < ApplicationController
     person = Person.find_or_initialize_by(people_id: @nb_person['people_id'])
     person.email          = @nb_person['email']
     person.mobile         = @nb_person['mobile']
+    person.phone          = @nb_person['phone']
     person.first_name     = @nb_person['first_name']
     person.last_name      = @nb_person['last_name']
     person.support_level  = @nb_person['support_level']
