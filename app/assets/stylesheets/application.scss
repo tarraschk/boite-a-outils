@@ -58,12 +58,16 @@ body {
 
 }
 
+.btn {
+  border: solid lightgrey 1px;
+}
+
 #header {
-  .btn-sm {
+  .btn {
     border: none;
   }
 
-  button.btn-sm:hover {
+  button.btn:hover {
     background-color: transparentize(#002855, 0.9);
   }
 }
