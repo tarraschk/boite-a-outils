@@ -1,80 +1,44 @@
-<h1>Edit person</h1>
-
-<form id="edit-person" name="person">
-  <div class="field">
-    <label for="first_name"> first_name:</label>
-    <input type="text" name="first_name" id="first_name" value="<%= first_name %>" >
-  </div>
-
-  <div class="field">
-    <label for="last_name"> last_name:</label>
-    <input type="text" name="last_name" id="last_name" value="<%= last_name %>" >
-  </div>
-
-  <div class="field">
-    <label for="email"> email:</label>
-    <input type="text" name="email" id="email" value="<%= email %>" >
-  </div>
-
-  <div class="field">
-    <label for="phone"> phone:</label>
-    <input type="text" name="phone" id="phone" value="<%= phone %>" >
-  </div>
-
-  <div class="field">
-    <label for="mobile"> mobile:</label>
-    <input type="text" name="mobile" id="mobile" value="<%= mobile %>" >
-  </div>
-
-  <div class="field">
-    <label for="address_address1"> address_address1:</label>
-    <input type="text" name="address_address1" id="address_address1" value="<%= address_address1 %>" >
-  </div>
-
-  <div class="field">
-    <label for="address_address2"> address_address2:</label>
-    <input type="text" name="address_address2" id="address_address2" value="<%= address_address2 %>" >
-  </div>
-
-  <div class="field">
-    <label for="address_address3"> address_address3:</label>
-    <input type="text" name="address_address3" id="address_address3" value="<%= address_address3 %>" >
-  </div>
-
-  <div class="field">
-    <label for="address_city"> address_city:</label>
-    <input type="text" name="address_city" id="address_city" value="<%= address_city %>" >
-  </div>
-
-  <div class="field">
-    <label for="address_state"> address_state:</label>
-    <input type="text" name="address_state" id="address_state" value="<%= address_state %>" >
-  </div>
-
-  <div class="field">
-    <label for="address_zip"> address_zip:</label>
-    <input type="text" name="address_zip" id="address_zip" value="<%= address_zip %>" >
-  </div>
-
-  <div class="field">
-    <label for="address_country_code"> address_country_code:</label>
-    <input type="text" name="address_country_code" id="address_country_code" value="<%= address_country_code %>" >
-  </div>
-
-  <div class="field">
-    <label for="address_lat"> address_lat:</label>
-    <input type="text" name="address_lat" id="address_lat" value="<%= address_lat %>" >
-  </div>
-
-  <div class="field">
-    <label for="address_lng"> address_lng:</label>
-    <input type="text" name="address_lng" id="address_lng" value="<%= address_lng %>" >
-  </div>
-
-  <div class="actions">
-    <input type="submit" value="Update Person" />
-  </div>
-
-</form>
-
-<a href="#/index">Back</a>
+<div class="row">
+    <div class="col-xs-4">
+        <img class="media-object img-circle" src="<%= profile_image_url_ssl %>" alt="Photo de <%= full_name %>" width="128" height="128" />
+        <br/>
+        <h4>Actions</h4>
+        <a id="button-update-person"><button type="button" class="btn btn-default btn-md" target="_blank"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Enregistrer</button></a><br/>
+        <a id="button-back-person"><button type="button" class="btn btn-default btn-md" target="_blank"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Annuler</button></a><br/>
+    </div>
+    <div class="col-xs-8">
+        <h4>Informations</h4>
+        <form class="form">
+            <div class="form-group">
+                <p>
+                    <label for="person-first_name"><b>Prénom :</b></label>
+                    <input type="text" class="form-control" id="person-first_name" name="first_name" placeholder="Prénom" value="<%= first_name %>"></input>
+                </p>
+            </div>
+            <div class="form-group">
+                <p>
+                    <label for="person-last_name"><b>Nom :</b></label>
+                    <input type="text" class="form-control" id="person-last_name" name="last_name" placeholder="Nom" value="<%= last_name %>"></input>
+                </p>
+            </div>
+            <div class="form-group">
+                <p>
+                    <label for="person-email"><b>Email :</b></label>
+                    <input type="text" class="form-control" id="person-email" name="email" placeholder="Adresse mail" value="<%= email %>"></input>
+                </p>
+            </div>
+            <div class="form-group">
+                <p>
+                    <label for="person-phone"><b>Téléphone :</b></label>
+                    <input type="text" class="form-control" id="person-phone" name="phone" placeholder="Téléphone" value="<%= phone %>"></input>
+                </p>
+            </div>
+            <div class="form-group">
+                <p>
+                    <label for="person-mobile"><b>Mobile :</b></label>
+                    <input type="text" class="form-control" id="person-mobile" name="mobile" placeholder="Mobile" value="<%= mobile %>"></input>
+                </p>
+            </div>
+        </form>
+    </div>
+</div>

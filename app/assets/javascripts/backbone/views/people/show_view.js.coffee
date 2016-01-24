@@ -4,7 +4,8 @@ class StaticFiles.Views.People.ShowView extends Backbone.View
   template: JST["backbone/templates/people/show"]
 
   events:
-    "click #button-contacted-person" : "update_contacted"
+    "click #button-contacted-person" : "update_contacted",
+    "click #button-edit-person" : "edit_person"
 
   render: ->
     @$el.html(@template(@model.toJSON() ))
@@ -27,4 +28,9 @@ class StaticFiles.Views.People.ShowView extends Backbone.View
         error: (person, response) ->
           window.params.semaphore.updates = false
       })
+    return false
+
+  edit_person: ->
+    window.personView = new StaticFiles.Views.People.EditView({el: '#person', model: @model})
+    window.personView.render()
     return false

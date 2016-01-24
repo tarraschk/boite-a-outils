@@ -1,7 +1,16 @@
 <a href="#<%= people_id %>" data-id="<%= id %>">
     <li class="media contacted-<%if(contacted){%>true<%}else{%>false<%}%>">
-        <div class="media-left">
-            <img class="media-object img-circle" src="<%= profile_image_url_ssl %>" alt="Photo de <%= full_name %>" width="32" height="32" />
+        <div class="media-left" style="width:45px;">
+            <table>
+                <tr>
+                    <td style="padding-right: 10px;">
+                        <input type="checkbox" name="people" value="<%= people_id %>" onclick='window.location.assign("#<%= people_id %>")'>
+                    </td>
+                    <td>
+                        <img class="media-object img-circle" src="<%= profile_image_url_ssl %>" alt="Photo de <%= full_name %>" width="32" height="32" />
+                    </td>
+                </tr>
+            </table>
         </div>
         <div class="media-body">
             <h4 class="media-heading"><%= full_name %></h4>
