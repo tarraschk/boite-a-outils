@@ -34,6 +34,10 @@ class StaticFiles.Views.People.PersonView extends Backbone.View
 
   check: () ->
     @model.set("crm_checked", !@model.get("crm_checked"))
+    if $("input[name='people-checkbox']:checked").length > 0
+      $("#button-email-select-contact > button").removeClass("disabled")
+    else
+      $("#button-email-select-contact > button").addClass("disabled")
 
   destroy: () ->
     @model.destroy()
