@@ -31,23 +31,22 @@ class PeopleController < ApplicationController
 
     Person.skip_callbacks = true
     person = Person.find_or_initialize_by(people_id: @nb_person['people_id'])
-    person.email          = @nb_person['primary_email']
+    person.email          = @nb_person['email']
     person.mobile         = @nb_person['mobile']
     person.first_name     = @nb_person['first_name']
     person.last_name      = @nb_person['last_name']
     person.support_level  = @nb_person['support_level']
     person.tags           = @nb_person['tags']
-    person.mandat         = @nb_person['tags']
+    person.mandat         = @nb_person['mandat']
 
     person.save
 
+    primary_address = @nb_person['primary_address']
     person.primary_address ||= Address.new
-    person.primary_address.address1
-    person.primary_address.city
-    person.primary_address.zip
+    person.primary_address.address1 = primary_address['address1']
+    person.primary_address.city     = primary_address['city']
+    person.primary_address.zip      = primary_address['zip']
     person.primary_address.save
-
-
 
     Person.skip_callbacks = false
 
@@ -102,10 +101,8 @@ class PeopleController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def person_params
-      if @person
-        params.require(:person).permit(:recruiter_id, :email, :mobile, :first_name, :last_name, :contacted) # it's an update, no update parent_id
-      else
-        params.require(:person).permit(:recruiter_id, :email, :mobile, :first_name, :last_name, :contacted, :parent_id)
-      end
+      permit_list = [:recruiter_id, :email, :mobile, :first_name, :last_name, :contacted, :mandat, :support_level, :tags, primary_address: [:address1, :zip, :city]]
+      permit_list << :parent_id unless @person
+      params.require(:person).permit(*permit_list)
     end
 end

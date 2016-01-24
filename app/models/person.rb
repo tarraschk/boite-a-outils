@@ -11,6 +11,8 @@ class Person < ActiveRecord::Base
 
   has_one :primary_address, class_name: Address, foreign_key: :person_id
 
+  accepts_nested_attributes_for :primary_address
+
   validates :people_id, uniqueness: true, unless: :skip_callbacks
 
   after_create  :send_to_nation_builder, unless: :skip_callbacks
