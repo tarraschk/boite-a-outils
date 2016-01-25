@@ -51,7 +51,7 @@ class PeopleController < ApplicationController
 
     Person.skip_callbacks = false
 
-    render json: @nb_person['person']
+    render json: person.attributes.merge(profile_image_url_ssl: @nb_person['profile_image_url_ssl'])
   end
 
   # GET /people/new
