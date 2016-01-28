@@ -5,11 +5,11 @@ class StaticFiles.Views.People.EditView extends Backbone.View
 
   events:
     "click #button-update-person": "update"
+    "click #button-back-person" : "cancel"
 
   update: ->
     if (parseInt(window.location.hash.substr(1)) == @model.get("people_id")) && (!window.params.semaphore.updates)
       window.params.semaphore.updates = true
-      console.log @model
       @model.set({
         "first_name": $("input[name='first_name']").val(),
         "last_name": $("input[name='last_name']").val(),
@@ -17,7 +17,6 @@ class StaticFiles.Views.People.EditView extends Backbone.View
         "phone": $("input[name='phone']").val(),
         "mobile": $("input[name='mobile']").val()
       })
-      console.log @model
       @model.save({
         "first_name": @model.get("first_name"),
         "last_name": @model.get("last_name"),
@@ -37,6 +36,12 @@ class StaticFiles.Views.People.EditView extends Backbone.View
         error: (person, response) ->
           window.params.semaphore.updates = false
       })
+    return false
+
+  cancel: ->
+    window.personView.unbind()
+    window.personView = new StaticFiles.Views.People.ShowView({el: '#person', model: @model})
+    window.personView.render()
     return false
 
   render: ->
