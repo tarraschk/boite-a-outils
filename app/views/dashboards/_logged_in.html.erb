@@ -2,6 +2,7 @@
 
   <h1>Mes contacts</h1>
   <div class="text-center">
+    <%= link_to '<button type="button" class="btn btn-default btn-lg" data-toggle="tooltip" data-placement="bottom" title="Ajouter un contact"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>'.html_safe, "#", id: "button-add-contact" %>
     <%= link_to '<button type="button" class="btn btn-default btn-lg" data-toggle="tooltip" data-placement="bottom" title="Envoyer un mail à tous les membres de mon comité"><span class="glyphicon glyphicon-send" aria-hidden="true"></span></button>'.html_safe, "#{current_user.email}&bcc=#{@children.map(&:email).join(",")}", id: "button-email-comite-contact", target: "_blank" %>
     <%= link_to '<button type="button" class="btn btn-default btn-lg disabled" data-toggle="tooltip" data-placement="bottom" title="Envoyer un mail aux personnes cochées ci-dessous"><span class="glyphicon glyphicon-list" aria-hidden="true"></span></button>'.html_safe, "#{current_user.email}&bcc=", id: "button-email-select-contact", target: "_blank" %>
     <br/><br/>
@@ -115,6 +116,20 @@
       });
 
       $('[data-toggle="tooltip"]').tooltip()
+    });
+
+    $("#button-add-contact").on("click", function() {
+      console.log("create");
+      var blankPerson = new StaticFiles.Models.Person();
+      if (window.personView != undefined) {
+        window.personView.unbind();
+      }
+      window.personView = new StaticFiles.Views.People.NewView({el: '#person', model: blankPerson});
+      window.personView.render();
+      $("#dashboard").addClass("hidden");
+      $("#person-loading").addClass("hidden");
+      $("#person").removeClass("hidden");
+      return false;
     });
 
     window.peopleCollection = new StaticFiles.Collections.PeopleCollection();
