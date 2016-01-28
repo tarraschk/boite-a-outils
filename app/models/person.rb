@@ -27,8 +27,9 @@ class Person < ActiveRecord::Base
       puts "TODO do synchro robot"
     end
 
+    client = NationBuilderClient.new
+
     unless (changed.map(&:to_s) & %w(email first_name last_name parent_id phone mobile)).empty?
-      client = NationBuilderClient.new
       params = attributes.slice(*%w(email first_name last_name parent_id phone mobile))
 
       if people_id
@@ -38,6 +39,21 @@ class Person < ActiveRecord::Base
         Person.skip_callbacks = true
         update(people_id: r['person']['id'])
         Person.skip_callbacks = false
+      end
+    end
+
+    if changed.include?('tags')
+      old_tags = JSON.parse(changes['tags'][0])
+      new_tags = JSON.parse(changes['tags'][1])
+
+      tags_to_remove  = old_tags - new_tags
+      tags_to_add     = new_tags - old_tags
+
+      tags_to_remove.each do |tag|
+        client.call(:people, :tag_removal, id: people_id, tag: tag)
+      end
+      tags_to_add.each do |tag|
+        client.call(:people, :tag_person, id: people_id, tagging: tag)
       end
     end
 
