@@ -9,9 +9,9 @@ class Person < ActiveRecord::Base
   has_many :children,     class_name: Person, primary_key: :people_id, foreign_key: :parent_id
   has_many :recruitees,   class_name: Person, primary_key: :people_id, foreign_key: :recruiter_id
 
-  has_one :primary_address, class_name: Address, foreign_key: :person_id
+  has_one :home_address, class_name: Address, foreign_key: :person_id
 
-  accepts_nested_attributes_for :primary_address
+  accepts_nested_attributes_for :home_address
 
   validates :people_id, uniqueness: true, unless: :skip_callbacks
 
