@@ -42,16 +42,26 @@ class PeopleController < ApplicationController
 
     person.save
 
-    primary_address = @nb_person['primary_address']
-    person.primary_address ||= Address.new
-    person.primary_address.address1 = primary_address['address1']
-    person.primary_address.city     = primary_address['city']
-    person.primary_address.zip      = primary_address['zip']
-    person.primary_address.save
+    person.home_address ||= Address.new
+
+    if !@nb_person['home_address'].nil?
+      home_address = @nb_person['home_address']
+      if !@nb_person['primary_address'].nil?
+        home_address = @nb_person['primary_address']
+      end
+
+    person.home_address.address1 = home_address['address1']
+    person.home_address.address2 = home_address['address2']
+    person.home_address.address3 = home_address['address3']
+    person.home_address.city     = home_address['city']
+    person.home_address.zip      = home_address['zip']
+    person.home_address.save
+
+    end
 
     Person.skip_callbacks = false
 
-    render json: person.attributes.merge(profile_image_url_ssl: @nb_person['profile_image_url_ssl'])
+    render json: person.attributes.merge(profile_image_url_ssl: @nb_person['profile_image_url_ssl'], home_address: home_address)
   end
 
   # GET /people/new
