@@ -12,6 +12,9 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require formvalidation.min
+//= require formvalidation/framework/bootstrap.min
+//= require formvalidation/language/fr_FR
 //= require turbolinks
 //= require bootstrap-sprockets
 //= require underscore
