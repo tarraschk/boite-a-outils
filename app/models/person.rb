@@ -34,26 +34,33 @@ class Person < ActiveRecord::Base
 
       if people_id
         client.call(:people, :update, id: people_id, person: params)
+        if changed.include?('tags')
+          old_tags = JSON.parse(changes['tags'][0])
+          new_tags = JSON.parse(changes['tags'][1])
+
+          tags_to_remove  = old_tags - new_tags
+          tags_to_add     = new_tags - old_tags
+
+          tags_to_remove.each do |tag|
+            client.call(:people, :tag_removal, id: people_id, tag: tag)
+          end
+          tags_to_add.each do |tag|
+            client.call(:people, :tag_person, id: people_id, tagging: tag)
+          end
+        end
       else
+        new_tags = JSON.parse(changes['tags'][1])
         r = client.call(:people, :create, person: params)
+
         Person.skip_callbacks = true
         update(people_id: r['person']['id'])
         Person.skip_callbacks = false
-      end
-    end
 
-    if changed.include?('tags')
-      old_tags = JSON.parse(changes['tags'][0])
-      new_tags = JSON.parse(changes['tags'][1])
+        new_tags.each do |tag|
+          puts tag
+          client.call(:people, :tag_person, id: r['person']['id'], tagging: {tag: tag})
+        end
 
-      tags_to_remove  = old_tags - new_tags
-      tags_to_add     = new_tags - old_tags
-
-      tags_to_remove.each do |tag|
-        client.call(:people, :tag_removal, id: people_id, tag: tag)
-      end
-      tags_to_add.each do |tag|
-        client.call(:people, :tag_person, id: people_id, tagging: tag)
       end
     end
 
