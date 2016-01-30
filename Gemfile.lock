@@ -77,6 +77,9 @@ GEM
     extlib (0.9.16)
     faraday (0.9.2)
       multipart-post (>= 1.2, < 3)
+    formvalidation-rails (0.7.0)
+      jquery-rails (>= 3.0)
+      railties (>= 3.0)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
     google-api-client (0.8.2)
@@ -238,6 +241,7 @@ DEPENDENCIES
   certified
   coffee-rails (~> 4.1.0)
   devise
+  formvalidation-rails
   google-api-client (= 0.8.2)
   jbuilder (~> 2.0)
   jquery-rails
