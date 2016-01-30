@@ -12,6 +12,7 @@ body {
   height: 100%;
   color: black;
   /* The html and body elements cannot have any padding or margin. */
+  font-family: Arial, "Lucida Grande", sans-serif;
 }
 
 /* Wrapper for page content to push down footer */
@@ -68,7 +69,9 @@ body {
   }
 
   button.btn:hover {
-    background-color: transparentize(#002855, 0.9);
+  }
+  span:hover {
+    background-color: transparent;
   }
 }
 
