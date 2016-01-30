@@ -3,40 +3,51 @@
         <i class="media-object img-circle glyphicon glyphicon-user" style="font-size:128px;"></i>
         <br/>
         <h4>Actions</h4>
-        <a id="button-save-person"><button type="button" class="btn btn-default btn-md" target="_blank"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Enregistrer</button></a><br/>
+        <a id="button-save-person"><button type="submit" class="btn btn-default btn-md" target="_blank"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Enregistrer</button></a><br/>
         <a id="button-back-person"><button type="button" class="btn btn-default btn-md" target="_blank"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Annuler</button></a><br/>
     </div>
     <div class="col-xs-8">
         <h4>Informations</h4>
-        <form class="form">
+        <form id="form-new-contact" class="form">
             <div class="form-group">
                 <p>
                     <label for="person-first_name"><b>Prénom :</b></label>
-                    <input type="text" class="form-control" id="person-first_name" name="first_name" placeholder="Prénom" value="<%= first_name %>"></input>
+                    <input type="text" class="form-control" id="person-first_name" name="person[first_name]" placeholder="Prénom" value="<%= first_name %>" type="text"
+                           data-fv-notempty="true"
+                           data-fv-notempty-message="Veuillez saisir un prénom."
+                           required></input>
                 </p>
             </div>
             <div class="form-group">
                 <p>
                     <label for="person-last_name"><b>Nom :</b></label>
-                    <input type="text" class="form-control" id="person-last_name" name="last_name" placeholder="Nom" value="<%= last_name %>"></input>
+                    <input type="text" class="form-control" id="person-last_name" name="person[last_name]" placeholder="Nom" value="<%= last_name %>" type="text"
+                           data-fv-notempty="true"
+                           data-fv-notempty-message="Veuillez saisir un nom de famille."
+                           required></input>
                 </p>
             </div>
             <div class="form-group">
                 <p>
                     <label for="person-email"><b>Email :</b></label>
-                    <input type="text" class="form-control" id="person-email" name="email" placeholder="Adresse mail" value="<%= email %>"></input>
+                    <input type="text" class="form-control" id="person-email" name="person[email]" placeholder="Adresse mail" value="<%= email %>" type="text"
+                           data-fv-notempty="true"
+                           data-fv-notempty-message="Veuillez saisir une adresse mail."
+                           data-fv-emailaddress="true"
+                           data-fv-emailaddress-message="Veuillez saisir une adresse mail valide."
+                           required></input>
                 </p>
             </div>
             <div class="form-group">
                 <p>
                     <label for="person-phone"><b>Téléphone :</b></label>
-                    <input type="text" class="form-control" id="person-phone" name="phone" placeholder="Téléphone" value="<%= phone %>"></input>
+                    <input type="text" class="form-control" id="person-phone" name="person[phone]" placeholder="Téléphone" value="<%= phone %>" type="text"></input>
                 </p>
             </div>
             <div class="form-group">
                 <p>
                     <label for="person-mobile"><b>Mobile :</b></label>
-                    <input type="text" class="form-control" id="person-mobile" name="mobile" placeholder="Mobile" value="<%= mobile %>"></input>
+                    <input type="text" class="form-control" id="person-mobile" name="person[mobile]" placeholder="Mobile" value="<%= mobile %>" type="text"></input>
                 </p>
             </div>
         </form>

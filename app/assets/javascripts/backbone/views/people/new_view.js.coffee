@@ -10,17 +10,27 @@ class StaticFiles.Views.People.NewView extends Backbone.View
   save: (e) ->
     e.preventDefault()
     e.stopPropagation()
+    window.params.semaphore.updates = true
+    $("#form-new-contact").formValidation({
 
-    @model.unset("errors")
+    })
+    $("#form-new-contact").data('formValidation').validate()
+    if $("#form-new-contact").data('formValidation').isValid()
+      $.post("/people", $("form").serialize())
+      .success (data) ->
+        person = new StaticFiles.Models.Person(data)
+        window.peopleCollection.add(person, {merge: true})
+        window.peopleView.unbind()
+        window.peopleView.render()
+        window.personView.unbind()
+        window.personView = new StaticFiles.Views.People.ShowView({el: '#person', model: person})
+        window.personView.render()
+        window.params.semaphore.updates = false
+        return
+      .error (person, response) ->
+        window.params.semaphore.updates = false
+        return
 
-    @collection.create(@model.toJSON(),
-      success: (person) =>
-        @model = person
-        window.location.hash = "/#{@model.id}"
-
-      error: (person, jqXHR) =>
-        @model.set({errors: $.parseJSON(jqXHR.responseText)})
-    )
 
   cancel: ->
     window.functionsAjxCrm.getHome()
