@@ -28,8 +28,8 @@
       </div>
       <div id="dashboard-stats-2" class="col-xs-4 text-center">
         <i class="glyphicon glyphicon-ok" style="font-size: 50px;"></i>
-        <h5><%= @children.where("contacted = ?", true).count %></h5>
-        <p>Membres contactés</p>
+        <h5><%= @children.where("contacted = ?", false).count %></h5>
+        <p>Personnes à contacter</p>
       </div>
       <div id="dashboard-stats-3" class="col-xs-4 text-center">
         <i class="glyphicon glyphicon-flash" style="font-size: 50px;"></i>
