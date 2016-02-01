@@ -1,4 +1,4 @@
-class UsersController < ApplicationController
+class UsersController < SignedInController
   before_action :set_user, only: [:mails]
 
   def mails

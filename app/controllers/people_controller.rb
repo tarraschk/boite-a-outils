@@ -1,4 +1,4 @@
-class PeopleController < ApplicationController
+class PeopleController < SignedInController
   before_action :set_person, only: [:show, :edit, :update]
 
   before_action :authorize_person_controller!
@@ -104,8 +104,7 @@ class PeopleController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def person_params
-      permit_list = [:recruiter_id, :email, :phone, :mobile, :first_name, :last_name, :contacted, :mandat, :support_level, :tags, primary_address: [:address1, :zip, :city]]
-      permit_list << :parent_id unless @person
+      permit_list = [:recruiter_id, :email, :phone, :mobile, :first_name, :last_name, :contacted, :mandat, :support_level, :tags, home_address_attributes: [:address1, :address2, :address3, :zip, :city]]
       params.require(:person).permit(*permit_list)
     end
 end

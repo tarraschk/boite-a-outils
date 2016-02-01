@@ -1,0 +1,60 @@
+
+<%= form_for @person, url: tools_door_to_door_form_person_path do |person| %>
+
+    <h2>Info personnelle</h2>
+    <div>
+        <label>Comité</label>
+        <%= person.collection_select(:recruiter_id, Committee.all, :people_id, :name, selected: cookies[:recruiter_id], include_blank: 'Aucun') %>
+    </div>
+
+    <div>
+        <label>nom</label>
+        <%= person.text_field :last_name %>
+    </div>
+    <div>
+        <label>prénom</label>
+        <%= person.text_field :first_name %>
+    </div>
+    <div>
+        <label>email</label>
+        <%= person.text_field :email %>
+    </div>
+    <div>
+        <label>numéro de téléphone</label>
+        <%= person.text_field :phone %>
+    </div>
+    <div>
+        <label>portable</label>
+        <%= person.text_field :mobile %>
+    </div>
+    <div>
+        <label>soutien</label>
+        <%= radio_button_tag('person[support_level]', '2') %>
+        <%= label_tag(:person_support_level_2, 'Oui') %>
+        <%= radio_button_tag('person[support_level]', '3', true) %>
+        <%= label_tag(:person_support_level_3, 'Peut-être') %>
+        <%= radio_button_tag('person[support_level]', '4') %>
+        <%= label_tag(:person_support_level_4, 'Non') %>
+    </div>
+    <div>
+        <%= label_tag(:wants_to_join_a_comittee, 'Rejoindre le comité') %>
+        <%= check_box_tag(:wants_to_join_a_comittee) %>
+    </div>
+
+    <h2>Adresse</h2>
+    <%= person.fields_for :home_address do |home_address| %>
+        <div>
+            <label>Adresse</label>
+            <%= home_address.text_field :address1 %>
+        </div>
+        <div>
+            <label>Code postal</label>
+            <%= home_address.text_field :zip %>
+        </div>
+        <div>
+            <label>Ville</label>
+            <%= home_address.text_field :city %>
+        </div>
+    <% end %>
+    <%= person.submit 'Next' %>
+<% end %>
