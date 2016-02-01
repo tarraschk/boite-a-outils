@@ -21,6 +21,14 @@ Rails.application.routes.draw do
     mount Sidekiq::Web => '/sidekiq'
   end
 
+  namespace :tools do
+    namespace :door_to_door_form do
+      get   :committees
+      post  :person
+    end
+    get :door_to_door_sign_up
+  end
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
