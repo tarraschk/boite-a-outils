@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160129133723) do
+ActiveRecord::Schema.define(version: 20160201200749) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,10 +35,13 @@ ActiveRecord::Schema.define(version: 20160129133723) do
     t.string   "animator_email"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.integer  "people_id"
+    t.string   "name"
   end
 
   add_index "committees", ["animator_email"], name: "index_committees_on_animator_email", using: :btree
   add_index "committees", ["event_id"], name: "index_committees_on_event_id", using: :btree
+  add_index "committees", ["people_id"], name: "index_committees_on_people_id", using: :btree
 
   create_table "gadget_files", force: :cascade do |t|
     t.string   "url"
