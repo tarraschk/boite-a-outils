@@ -28,6 +28,7 @@ class StaticFiles.Views.People.NewView extends Backbone.View
         window.params.semaphore.updates = false
         return
       .error (person, response) ->
+        alert "Erreur, veuillez vérifier vos données.<br/>Information technique : "+response
         window.params.semaphore.updates = false
         return
 
