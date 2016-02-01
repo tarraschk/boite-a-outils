@@ -44,19 +44,13 @@ class PeopleController < ApplicationController
 
     person.home_address ||= Address.new
 
-    if !@nb_person['home_address'].nil?
-      home_address = @nb_person['home_address']
-      if !@nb_person['primary_address'].nil?
-        home_address = @nb_person['primary_address']
-      end
-
-    person.home_address.address1 = home_address['address1']
-    person.home_address.address2 = home_address['address2']
-    person.home_address.address3 = home_address['address3']
-    person.home_address.city     = home_address['city']
-    person.home_address.zip      = home_address['zip']
-    person.home_address.save
-
+    if home_address = @nb_person['primary_address'] || @nb_person['home_address']
+      person.home_address.address1 = home_address['address1']
+      person.home_address.address2 = home_address['address2']
+      person.home_address.address3 = home_address['address3']
+      person.home_address.city     = home_address['city']
+      person.home_address.zip      = home_address['zip']
+      person.home_address.save
     end
 
     Person.skip_callbacks = false

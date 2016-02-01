@@ -29,7 +29,7 @@ class Person < ActiveRecord::Base
 
     client = NationBuilderClient.new
 
-    unless (changed.map(&:to_s) & %w(email first_name last_name parent_id phone mobile)).empty?
+    unless (changed.map(&:to_s) & %w(email first_name last_name parent_id phone mobile tags)).empty?
       params = attributes.slice(*%w(email first_name last_name parent_id phone mobile))
 
       if people_id
@@ -57,7 +57,6 @@ class Person < ActiveRecord::Base
         Person.skip_callbacks = false
 
         new_tags.each do |tag|
-          puts tag
           client.call(:people, :tag_person, id: r['person']['id'], tagging: {tag: tag})
         end
 
