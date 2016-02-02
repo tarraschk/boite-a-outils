@@ -1,60 +1,66 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-12 col-md-offset-0 col-lg-12 col-lg-offset-0 ">
+      <h2>Opération PAP</h2>
+      <%= form_for @person, url: tools_door_to_door_form_person_path do |person| %>
 
-<%= form_for @person, url: tools_door_to_door_form_person_path do |person| %>
+          <h3>Informations personnelles</h3>
+          <div class="form-group">
+              <label>Comité</label>
+              <%= person.collection_select( :recruiter_id, Committee.all, :people_id, :name, {:selected => cookies[:recruiter_id], :include_blank => 'Aucun' }, {:class => 'form-control'} ) %>
+          </div>
 
-    <h2>Info personnelle</h2>
-    <div>
-        <label>Comité</label>
-        <%= person.collection_select(:recruiter_id, Committee.all, :people_id, :name, selected: cookies[:recruiter_id], include_blank: 'Aucun') %>
-    </div>
+          <div class="form-group">
+              <label>Nom</label>
+              <%= person.text_field :last_name, class: 'form-control' %>
+          </div>
+          <div class="form-group">
+              <label>Prénom</label>
+              <%= person.text_field :first_name, class: 'form-control' %>
+          </div>
+          <div class="form-group">
+              <label>Email</label>
+              <%= person.text_field :email, class: 'form-control' %>
+          </div>
+          <div class="form-group">
+              <label>Numéro de téléphone</label>
+              <%= person.text_field :phone, class: 'form-control' %>
+          </div>
+          <div class="form-group">
+              <label>Numéro de mobile</label>
+              <%= person.text_field :mobile, class: 'form-control'%>
+          </div>
+          <div class="form-group">
+              <label>Niveau de soutien :</label> <br/>
+              <%= radio_button_tag('person[support_level]', '2') %>
+              <%= label_tag(:person_support_level_2, 'Fort') %>
+              <%= radio_button_tag('person[support_level]', '3', true) %>
+              <%= label_tag(:person_support_level_3, 'Moyen') %>
+              <%= radio_button_tag('person[support_level]', '4') %>
+              <%= label_tag(:person_support_level_4, 'Négatif') %>
+          </div>
+          <div class="form-group">
+            <%= check_box_tag(:wants_to_join_a_comittee) %>
+            <%= label_tag(:wants_to_join_a_comittee, 'Souhaite rejoindre un comité') %>
+          </div>
 
-    <div>
-        <label>nom</label>
-        <%= person.text_field :last_name %>
+          <h3>Adresse</h3>
+          <%= person.fields_for :home_address do |home_address| %>
+              <div class="form-group">
+                  <label>Adresse</label>
+                  <%= home_address.text_area :address1, class: 'form-control', rows: 3, style: 'resize: none;' %>
+              </div>
+              <div class="form-group">
+                  <label>Code postal</label>
+                  <%= home_address.text_field :zip, class: 'form-control' %>
+              </div>
+              <div class="form-group">
+                  <label>Ville</label>
+                  <%= home_address.text_field :city, class: 'form-control' %>
+              </div>
+          <% end %>
+          <%= person.submit 'Envoyer', class: 'btn btn-lg btn-primary'%>
+      <% end %>
     </div>
-    <div>
-        <label>prénom</label>
-        <%= person.text_field :first_name %>
-    </div>
-    <div>
-        <label>email</label>
-        <%= person.text_field :email %>
-    </div>
-    <div>
-        <label>numéro de téléphone</label>
-        <%= person.text_field :phone %>
-    </div>
-    <div>
-        <label>portable</label>
-        <%= person.text_field :mobile %>
-    </div>
-    <div>
-        <label>soutien</label>
-        <%= radio_button_tag('person[support_level]', '2') %>
-        <%= label_tag(:person_support_level_2, 'Oui') %>
-        <%= radio_button_tag('person[support_level]', '3', true) %>
-        <%= label_tag(:person_support_level_3, 'Peut-être') %>
-        <%= radio_button_tag('person[support_level]', '4') %>
-        <%= label_tag(:person_support_level_4, 'Non') %>
-    </div>
-    <div>
-        <%= label_tag(:wants_to_join_a_comittee, 'Rejoindre le comité') %>
-        <%= check_box_tag(:wants_to_join_a_comittee) %>
-    </div>
-
-    <h2>Adresse</h2>
-    <%= person.fields_for :home_address do |home_address| %>
-        <div>
-            <label>Adresse</label>
-            <%= home_address.text_field :address1 %>
-        </div>
-        <div>
-            <label>Code postal</label>
-            <%= home_address.text_field :zip %>
-        </div>
-        <div>
-            <label>Ville</label>
-            <%= home_address.text_field :city %>
-        </div>
-    <% end %>
-    <%= person.submit 'Next' %>
-<% end %>
+  </div>
+</div>

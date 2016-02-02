@@ -12,7 +12,7 @@ module Tools
       if person.errors.any?
         flash[:danger] = person.errors
       else
-        flash[:notice] = 'Soutien enregistré avec succès'
+        flash[:success] = 'Soutien enregistré avec succès !'
       end
     rescue => e
       Rails.logger.error e
