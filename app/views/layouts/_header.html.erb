@@ -15,6 +15,7 @@
           <%= link_to '<button type="button" class="btn btn-default btn-md"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Consulter / Envoyer des mails</button>'.html_safe, "https://mail.google.com/mail/?authuser=#{current_user.email}", id: "button-email-gmail", target: "_blank" %>
           <%= link_to '<button type="button" class="btn btn-default btn-md"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> Contacter mon référent régional</button>'.html_safe, "#{@parent.email}", id: "button-email-referent-contact", target: "_blank" %>
           <%= link_to '<button type="button" class="btn btn-default btn-md"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Contacter le support</button>'.html_safe, "support@alainjuppe2017.fr", id: "button-email-support-contact", target: "_blank" %>
+          <%= link_to '<button type="button" class="btn btn-default btn-md"><span class="glyphicon glyphicon-bullhorn" aria-hidden="true"></span> Opération PAP</button>'.html_safe, tools_door_to_door_sign_up_path, id: "button-pap", target: "_blank" %>
           <%= link_to '<button type="button" class="btn btn-default btn-md"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Déconnexion</button>'.html_safe, destroy_user_session_path, :method => :delete %>
         </div>
       <% end %>

@@ -6,6 +6,9 @@
         <p>Veuillez vous connecter à l'aide de vos identifiants "juppe-2017.fr" pour accéder à votre espace en ligne.</p>
         <br/>
         <%= link_to "CONNEXION", user_omniauth_authorize_path(:google_oauth2), class: "btn btn-primary btn-lg" %>
+        <br/><br/><br/>
+        <p>Si vous souhaitez simplement accéder au formulaire de Porte à porte, cliquez ici :</p>
+        <%= link_to '<button type="button" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-bullhorn" aria-hidden="true"></span> Opération PAP</button>'.html_safe, tools_door_to_door_sign_up_path, id: "button-pap", target: "_blank" %>
       </div>
     </div>
   </div>
