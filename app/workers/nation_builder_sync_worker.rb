@@ -33,7 +33,7 @@ class NationBuilderSyncWorker
     logger.info "       #############                    current people id #{people_list.first['id']}                 ################"
     puts        "       #############                    current people id #{people_list.first['id']}                 ################"
     already_done = Person.where(people_id: people_list.map{|p| p['id']}).pluck(:people_id)
-    to_do = people_list.map {|person| person.slice(*%w(id email first_name last_name recruiter_id phone mobile parent_id tags support_level mandat primary_address))}.map {|h| already_done.include?(h['id']) ? nil : (h['people_id'] = h.delete('id'); h)}.compact
+    to_do = people_list.map {|person| person.slice(*%w(id email first_name last_name recruiter_id phone mobile parent_id tags support_level mandat home_address))}.map {|h| already_done.include?(h['id']) ? nil : (h['people_id'] = h.delete('id'); h)}.compact
     ActiveRecord::Base.transaction do
       Person.create(to_do)
     end
