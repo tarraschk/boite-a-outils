@@ -12,8 +12,8 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     @user = User.find_for_google_oauth2(request.env["omniauth.auth"], current_user)
 
     if @user.nil?
-      flash['danger'] = "Vous n'existez pas"
-      redirect_to :back
+      flash['danger'] = "ERREUR : Votre adresse mail n'a pas encore été importée dans la Boîte à outils ! Notre équipe a été informée de ce problème et le résoudra dans les plus brefs délais. Merci pour votre patience."
+      redirect_to dashboard_path
     elsif @user.persisted?
       flash[:success] = I18n.t "devise.omniauth_callbacks.success", :kind => "Google"
       sign_in_and_redirect @user, event: :authentication
