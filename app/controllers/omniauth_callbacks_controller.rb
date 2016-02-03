@@ -6,7 +6,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     email = request.env['omniauth.auth'].info['email']
     unless email && email.split('@')[1].in?(%w(alainjuppe2017.fr juppe-2017.fr))
       flash['danger'] = "Veuillez vous connecter à l’aide d'une adresse juppe-2017.fr ou alainjuppe2017.fr"
-      redirect_to :back
+      redirect_to dashboard_path
       return
     end
     @user = User.find_for_google_oauth2(request.env["omniauth.auth"], current_user)
