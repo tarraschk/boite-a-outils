@@ -80,6 +80,8 @@ class PeopleController < SignedInController
     else
       render json: @person.errors
     end
+  rescue => e
+    render status: 500, json: {nb_error: "Attention, la synchronisation avec NationBuilder a échoué, merci de réessayer."}
   end
 
   # PATCH/PUT /people/1
