@@ -21,6 +21,11 @@ class Person < ActiveRecord::Base
 
   after_save    :send_to_nation_builder, unless: :skip_callbacks
 
+  def before_create
+    self.created_at = Time.now
+    self.updated_at = Time.now
+  end
+
   def send_to_nation_builder
 
     if changed.map(&:to_s).include?('contacted')
