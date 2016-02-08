@@ -52,7 +52,7 @@ class NationBuilderSyncWorker
           instance_person.mandat = person['mandat']
           instance_person.save
 
-          home_address ||= Address.new
+          instance_person.home_address ||= Address.new
           if home_address = person['primary_address'] || person['home_address']
             instance_person.home_address.address1 = home_address['address1']
             instance_person.home_address.address2 = home_address['address2']
