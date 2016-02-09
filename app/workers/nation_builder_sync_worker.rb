@@ -36,6 +36,7 @@ class NationBuilderSyncWorker
     #to_do = people_list.map {|person| person.slice(*%w(id email first_name last_name recruiter_id phone mobile parent_id tags support_level mandat home_address))}.map {|h| already_done.include?(h['id']) ? nil : (h['people_id'] = h.delete('id'); h)}.compact
     people_list.each do |person|
       puts        "--- creating people id #{person['id']} ---"
+      next unless person['email'] || person['phone_number']
       ActiveRecord::Base.transaction do
         Person.skip_callbacks = true
         Person.where(people_id: person['id']).first_or_initialize do |instance_person|
