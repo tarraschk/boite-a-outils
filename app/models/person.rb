@@ -39,6 +39,9 @@ class Person < ActiveRecord::Base
 
     unless (changed.map(&:to_s) & %w(email first_name last_name parent_id phone mobile tags)).empty?
       params = attributes.slice(*%w(email first_name last_name parent_id phone mobile))
+      params.keys.each do |key|
+        params[key] = '' if params[key].nil?
+      end
 
       if people_id
         client.call(:people, :update, id: people_id, person: params)
