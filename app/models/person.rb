@@ -1,6 +1,7 @@
 class Person < ActiveRecord::Base
-
   cattr_accessor :skip_callbacks
+
+  cattr_accessor :skip_get_parent_id_callbacks
 
   belongs_to :parent,     class_name: Person, primary_key: :people_id
   belongs_to :recruiter,  class_name: Person, primary_key: :people_id
@@ -20,7 +21,7 @@ class Person < ActiveRecord::Base
   after_create  :get_parent_id
 
   after_save    :send_to_nation_builder, unless: :skip_callbacks
-  after_save    :get_parent_id
+  after_save    :get_parent_id,         unless: :skip_get_parent_id_callbacks
 
   def before_create
     self.created_at = Time.now
