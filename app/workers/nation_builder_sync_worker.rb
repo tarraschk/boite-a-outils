@@ -20,13 +20,13 @@ class NationBuilderSyncWorker
       end
     end
 
-    ActiveRecord::Base.record_timestamps = false
+    Synchronization.record_timestamps = false
     last_synchronization.save
-    ActiveRecord::Base.record_timestamps = true
+
+  ensure
+    Synchronization.record_timestamps = true
     Person.skip_callbacks = false
-
     NationBuilderSyncWorker.perform_async
-
   end
 
   def create_people_from_result(people_list)
@@ -39,17 +39,16 @@ class NationBuilderSyncWorker
       ActiveRecord::Base.transaction do
         Person.skip_callbacks = true
         Person.where(people_id: person['id']).first_or_initialize do |instance_person|
-          instance_person.people_id = person['id']
-          instance_person.email = person['email']
-          instance_person.first_name = person['first_name']
-          instance_person.last_name = person['last_name']
-          instance_person.recruiter_id = person['recruiter_id']
-          instance_person.phone = person['phone']
-          instance_person.mobile = person['mobile']
-          instance_person.parent_id = person['parent_id']
-          instance_person.tags = person['tags']
+          instance_person.people_id     = person['id']
+          instance_person.email         = person['email']
+          instance_person.first_name    = person['first_name']
+          instance_person.last_name     = person['last_name']
+          instance_person.recruiter_id  = person['recruiter_id']
+          instance_person.phone         = person['phone']
+          instance_person.mobile        = person['mobile']
+          instance_person.tags          = person['tags']
           instance_person.support_level = person['support_level']
-          instance_person.mandat = person['mandat']
+          instance_person.mandat        = person['mandat']
           instance_person.save
 
           instance_person.home_address ||= Address.new

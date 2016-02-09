@@ -20,6 +20,7 @@ class Person < ActiveRecord::Base
   after_create  :get_parent_id
 
   after_save    :send_to_nation_builder, unless: :skip_callbacks
+  after_save    :get_parent_id
 
   def before_create
     self.created_at = Time.now
