@@ -46,8 +46,8 @@ class Person < ActiveRecord::Base
       if people_id
         client.call(:people, :update, id: people_id, person: params)
         if changed.include?('tags')
-          old_tags = JSON.parse(changes['tags'][0])
-          new_tags = JSON.parse(changes['tags'][1])
+          old_tags = JSON.parse(changes['tags'][0] || '[]')
+          new_tags = JSON.parse(changes['tags'][1] || '[]')
 
           tags_to_remove  = old_tags - new_tags
           tags_to_add     = new_tags - old_tags
