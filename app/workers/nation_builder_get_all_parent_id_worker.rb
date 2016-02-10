@@ -10,5 +10,5 @@ class NationBuilderGetAllParentIdWorker
       person.get_parent_id if person
       NationBuilderGetAllParentIdWorker.perform_async(people_id-1)
     end
-
+  end
 end
