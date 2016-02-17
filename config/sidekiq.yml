@@ -1,12 +1,15 @@
-:concurrency: 5
+:concurrency: 40
 development:
-  :concurrency: 30
+  :concurrency: 40
   :limits:
-    critical: 30
-    default: 25
-    traces: 20
+    get_all_people_worker: 15
+    get_parent_id_worker: 15
+    default: 15
+
 
 production:
-  :concurrency: 9
+  :concurrency: 40
   :limits:
-    default: 9
+    get_all_people_worker: 15
+    get_parent_id_worker: 15
+    default: 15

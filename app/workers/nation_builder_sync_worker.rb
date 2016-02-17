@@ -9,8 +9,7 @@ class NationBuilderSyncWorker
     client = NationBuilderClient.new
     params = updated_at ? [:search, updated_since: updated_at, limit: 100] : [:index, limit: 100]
     paginator = NationBuilder::Paginator.new(client, client.call(:people, *params))
-    Person.skip_callbacks = true
-    while paginator.next? #&& Person.count < 200
+    while paginator.next?
       create_people_from_result(paginator.body['results'])
       begin
         paginator = paginator.next
@@ -25,7 +24,7 @@ class NationBuilderSyncWorker
 
   ensure
     Synchronization.record_timestamps = true
-    Person.skip_callbacks = false
+    sleep 600
     NationBuilderSyncWorker.perform_async
   end
 
@@ -38,7 +37,6 @@ class NationBuilderSyncWorker
       puts        "--- creating people id #{person['id']} ---"
       next unless person['email'] || person['phone'] || person['mobile']
 
-      Person.skip_callbacks = true
       Person.where(people_id: person['id']).first_or_initialize do |instance_person|
         instance_person.people_id     = person['id']
         instance_person.email         = person['email'].to_s
@@ -50,7 +48,7 @@ class NationBuilderSyncWorker
         instance_person.tags          = person['tags']
         instance_person.support_level = person['support_level']
         instance_person.mandat        = person['mandat']
-        instance_person.save
+        instance_person.save_without_callbacks
 
         instance_person.home_address ||= Address.new
         if home_address = person['primary_address'] || person['home_address']
@@ -59,10 +57,9 @@ class NationBuilderSyncWorker
           instance_person.home_address.address3 = home_address['address3']
           instance_person.home_address.city     = home_address['city']
           instance_person.home_address.zip      = home_address['zip']
-          instance_person.home_address.save
+          instance_person.home_address.save_without_callbacks
         end
       end
-      Person.skip_callbacks = false
     end
     ActiveRecord::Base.clear_active_connections!
   end

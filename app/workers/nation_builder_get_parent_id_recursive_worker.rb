@@ -1,5 +1,6 @@
-class NationBuilderGetAllParentIdWorker
+class NationBuilderGetParentIdRecursiveWorker
   include Sidekiq::Worker
+  sidekiq_options queue: :get_people_worker
 
   def perform(people_id)
     Rails.logger.info "--- creating parent for people id #{people_id} ---"
@@ -8,7 +9,10 @@ class NationBuilderGetAllParentIdWorker
     if people_id > 0
       person = Person.find_by(people_id: people_id)
       person.get_parent_id if person
-      NationBuilderGetAllParentIdWorker.perform_async(people_id-1)
+      NationBuilderGetParentIdRecursiveWorker.perform_async(people_id - 10)
     end
+  rescue => e
+    logger.error e.message
+    #TODO Add mailer
   end
 end

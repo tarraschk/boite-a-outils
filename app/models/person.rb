@@ -28,6 +28,15 @@ class Person < ActiveRecord::Base
     self.updated_at = Time.now
   end
 
+  def save_without_callbacks
+    Person.skip_callbacks               = true
+    Person.skip_get_parent_id_callbacks = true
+    save
+  ensure
+    Person.skip_callbacks               = false
+    Person.skip_get_parent_id_callbacks = false
+  end
+
   def send_to_nation_builder
     return unless email || mobile || phone
 
