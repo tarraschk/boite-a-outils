@@ -3,11 +3,12 @@ class NationBuilderGetPeopleRecursiveWorker
   sidekiq_options queue: :get_all_people_worker
 
   def perform(people_id)
-    Rails.logger.info "--- creating parent for people id #{people_id} ---"
-    puts "--- creating parent for people id #{people_id} ---"
+    Rails.logger.info "--- creating people for people id #{people_id} ---"
+    puts "--- creating people for people id #{people_id} ---"
 
     if people_id > 0
       person = NationBuilderClient.new.call(:people, :show, id: people_id)['person']
+      puts person
 
       Person.where(people_id: person['id']).first_or_initialize do |instance_person|
         instance_person.people_id     = person['id']
