@@ -39,8 +39,10 @@ class NationBuilderGetPeopleRecursiveWorker
     logger.error e.message
     #TODO Add mailer
   ensure
-    if people_id > 40
-      NationBuilderGetPeopleRecursiveWorker.perform_async(people_id - 40)
+    if people_id > 100
+      NationBuilderGetPeopleRecursiveWorker.perform_async(people_id - 100)
+    elsif people_id == 100
+      NationBuilderGetPeopleRecursiveLaunchWorker.perform_async
     end
   end
 end
