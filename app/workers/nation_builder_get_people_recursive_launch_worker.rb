@@ -5,7 +5,7 @@ class NationBuilderGetPeopleRecursiveLaunchWorker
     Rails.logger.info "--- Start launching get_people_recursive worker ---"
     puts "--- Start launching get_people_recursive worker ---"
 
-    count = NationBuilderClient.new.call(:people, :count)['people_count'] + 1000
+    count = NationBuilderClient.new.call(:people, :count)['people_count'] + 6000
 
     (0..9).each do |index|
       NationBuilderGetPeopleRecursiveWorker.perform_async(count - index)
