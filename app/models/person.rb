@@ -87,7 +87,7 @@ class Person < ActiveRecord::Base
 
   def get_parent_id
     if people_id
-      NationBuilderGetParentIdWorker.perform_async(people_id)
+      #NationBuilderGetParentIdWorker.perform_async(people_id)
     end
   end
 
