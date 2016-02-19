@@ -8,8 +8,8 @@ development:
 
 
 production:
-  :concurrency: 100
+  :concurrency: 60
   :limits:
-    get_all_people_worker: 80
+    get_all_people_worker: 40
     get_parent_id_worker: 10
     default: 10
