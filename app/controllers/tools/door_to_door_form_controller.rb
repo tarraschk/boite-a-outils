@@ -5,7 +5,7 @@ module Tools
       filtered_params = params.require(:person).permit(:recruiter_id, :email, :phone, :mobile, :first_name, :last_name, :contacted, :mandat, :support_level, :tags, home_address_attributes: [:address1, :address2, :address3, :zip, :city])
       cookies[:recruiter_id] = params[:person]['recruiter_id']
       if params['wants_to_join_a_comittee']
-        filtered_params[:tags] = %w(a_contacter comite_membre)
+        filtered_params[:tags] = %w(a_contacter comite_membre comite_pap_boitesaoutils comite_boiteaoutils)
       end
       Person.skip_callbacks = true
       person = Person.create(filtered_params)
