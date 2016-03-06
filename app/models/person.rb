@@ -16,8 +16,6 @@ class Person < ActiveRecord::Base
 
   validates :people_id, uniqueness: true, unless: :skip_callbacks
 
-  after_create  :send_to_nation_builder,  unless: :skip_callbacks
-
   after_create  :get_parent_id
 
   after_save    :send_to_nation_builder,  unless: :skip_callbacks
@@ -37,7 +35,8 @@ class Person < ActiveRecord::Base
     Person.skip_get_parent_id_callbacks = false
   end
 
-  def send_to_nation_builder
+  def send_to_nation_builder(send_to_nb = false)
+    return unless people_id || send_to_nb
     return unless email || mobile || phone
 
     if changed.map(&:to_s).include?('contacted')

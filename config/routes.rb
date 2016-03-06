@@ -29,6 +29,12 @@ Rails.application.routes.draw do
     get :door_to_door_sign_up
   end
 
+  namespace :admin_tools do
+    get :dashboard
+    get :people_databable
+    post :send_to_nation_builder
+  end
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

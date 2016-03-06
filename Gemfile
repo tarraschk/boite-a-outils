@@ -28,6 +28,9 @@ gem 'puma'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
+gem 'jquery-datatables-rails'
+gem 'ajax-datatables-rails'
+
 gem 'devise'
 gem 'omniauth'
 gem 'omniauth-google-oauth2'
