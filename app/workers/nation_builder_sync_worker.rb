@@ -22,6 +22,8 @@ class NationBuilderSyncWorker
     Synchronization.record_timestamps = false
     last_synchronization.save
 
+  rescue => e
+    logger.info e
   ensure
     Synchronization.record_timestamps = true
     sleep 600
