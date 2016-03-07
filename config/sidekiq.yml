@@ -9,9 +9,9 @@ development:
 
 
 production:
-  :concurrency: 70
+  :concurrency: 60
   :limits:
-    get_all_people_worker: 40
+    get_all_people_worker: 30
     get_last_people_worker: 10
     get_parent_id_worker: 10
     default: 10
