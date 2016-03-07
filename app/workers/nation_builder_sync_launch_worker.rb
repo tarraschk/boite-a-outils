@@ -17,7 +17,7 @@ class NationBuilderSyncLaunchWorker
         paginator = paginator.next
       rescue => e
         Rails.logger.error e
-        Mailer.new.send_error e.message  + "\n" + e.backtrace.inspect
+        Mailer.new.send_error "NationBuilderSyncLaunchWorker\n" + e.message  + "\n" + e.backtrace.inspect
         retry
       end
     end
@@ -27,7 +27,7 @@ class NationBuilderSyncLaunchWorker
 
   rescue => e
     Rails.logger.error e
-    Mailer.new.send_error e.message  + "\n" + e.backtrace.inspect
+    Mailer.new.send_error "NationBuilderSyncLaunchWorker\n" + e.message  + "\n" + e.backtrace.inspect
   ensure
     Synchronization.record_timestamps = true
     sleep 600
