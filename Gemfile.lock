@@ -255,6 +255,7 @@ DEPENDENCIES
   jquery-datatables-rails
   jquery-rails
   json
+  mail
   nationbuilder-rb
   omniauth
   omniauth-google-oauth2
