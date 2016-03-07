@@ -35,8 +35,8 @@ class NationBuilderGetPeopleRecursiveWorker
       end
     end
   rescue => e
-    if e['code'] != "not_found"
-      Rails.logger.error e
+    Rails.logger.error e
+    if JSON.parse(e.message)["code"] != "not_found"
       Mailer.new.send_error "NationBuilderGetPeopleRecursiveWorker("+people_id+")\n" + e.message  + "\n" + e.backtrace.inspect
     end
   ensure
