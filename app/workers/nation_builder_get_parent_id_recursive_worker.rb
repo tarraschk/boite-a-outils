@@ -13,6 +13,6 @@ class NationBuilderGetParentIdRecursiveWorker
     end
   rescue => e
     logger.error e.message
-    #TODO Add mailer
+    Mailer.new.send_error e
   end
 end

@@ -36,7 +36,7 @@ class NationBuilderGetPeopleRecursiveWorker
     end
   rescue => e
     logger.error e.message
-    #TODO Add mailer
+    Mailer.new.send_error e
   ensure
     if people_id > 40
       NationBuilderGetPeopleRecursiveWorker.perform_async(people_id - 40)
