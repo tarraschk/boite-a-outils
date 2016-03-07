@@ -7,12 +7,15 @@ class NationBuilderSyncWorker
     puts        "       #############                    current people id #{people_id}                 ################"
     puts        "--- creating people id #{people_id} ---"
 
-    instance_person = Person.where(people_id: people_id).first_or_initialize
+    person = NationBuilderClient.new.call(:people, :show, id: people_id)['person']
+    puts person
 
+    instance_person = Person.where(people_id: people_id).first_or_initialize
     instance_person.people_id     = person['id']
     instance_person.email         = person['email'].to_s
     instance_person.first_name    = person['first_name'].to_s
     instance_person.last_name     = person['last_name'].to_s
+    instance_person.parent_id     = person['parent_id']
     instance_person.recruiter_id  = person['recruiter_id']
     instance_person.phone         = person['phone'].to_s
     instance_person.mobile        = person['mobile'].to_s
@@ -32,8 +35,8 @@ class NationBuilderSyncWorker
     end
 
   rescue => e
-    if e['code'] != "not_found"
-      Rails.logger.error e
+    Rails.logger.error e
+    if JSON.parse(e.message)["code"] != "not_found"
       Mailer.new.send_error "NationBuilderSyncWorker("+people_id+")\n" + e.message  + "\n" + e.backtrace.inspect
     end
   end
