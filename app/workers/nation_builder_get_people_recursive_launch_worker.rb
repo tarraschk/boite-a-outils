@@ -13,6 +13,6 @@ class NationBuilderGetPeopleRecursiveLaunchWorker
 
   rescue => e
     Rails.logger.error e.message
-    Mailer.new.send_error e
+    Mailer.new.send_error e.message  + "\n" + e.backtrace.inspect
   end
 end

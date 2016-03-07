@@ -1,5 +1,6 @@
 class NationBuilderSyncWorker
   include Sidekiq::Worker
+  sidekiq_options queue: :get_last_people_worker
 
   def perform(people_id)
     logger.info "       #############                    current people id #{people_id}                 ################"
@@ -32,6 +33,6 @@ class NationBuilderSyncWorker
 
   rescue => e
     Rails.logger.error e
-    Mailer.new.send_error e
+    Mailer.new.send_error e.message  + "\n" + e.backtrace.inspect
   end
 end
