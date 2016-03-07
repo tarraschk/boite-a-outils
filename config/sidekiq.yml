@@ -3,13 +3,15 @@ development:
   :concurrency: 30
   :limits:
     get_all_people_worker: 10
-    get_parent_id_worker: 10
-    default: 10
+    get_last_people_worker: 10
+    get_parent_id_worker: 5
+    default: 5
 
 
 production:
-  :concurrency: 60
+  :concurrency: 70
   :limits:
     get_all_people_worker: 40
+    get_last_people_worker: 10
     get_parent_id_worker: 10
     default: 10
