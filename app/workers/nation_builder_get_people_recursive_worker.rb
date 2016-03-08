@@ -40,9 +40,9 @@ class NationBuilderGetPeopleRecursiveWorker
       Mailer.new.send_error "NationBuilderGetPeopleRecursiveWorker("+people_id+")\n" + e.message  + "\n" + e.backtrace.inspect
     end
   ensure
-    if people_id > 30
-      NationBuilderGetPeopleRecursiveWorker.perform_async(people_id - 30)
-    elsif people_id == 30
+    if people_id > 50
+      NationBuilderGetPeopleRecursiveWorker.perform_async(people_id - 50)
+    elsif people_id == 50
       NationBuilderGetPeopleRecursiveLaunchWorker.perform_async
     end
   end

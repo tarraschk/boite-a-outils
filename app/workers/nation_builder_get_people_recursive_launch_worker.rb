@@ -7,7 +7,7 @@ class NationBuilderGetPeopleRecursiveLaunchWorker
 
     count = NationBuilderClient.new.call(:people, :count)['people_count'] + 6000
 
-    (0..29).each do |index|
+    (0..49).each do |index|
       NationBuilderGetPeopleRecursiveWorker.perform_async(count - index)
     end
 
