@@ -37,7 +37,7 @@ class NationBuilderSyncWorker
   rescue => e
     Rails.logger.error e
     if JSON.parse(e.message)["code"] != "not_found"
-      Mailer.new.send_error "NationBuilderSyncWorker("+people_id+")\n" + e.message  + "\n" + e.backtrace.inspect
+      Mailer.new.send_error "NationBuilderSyncWorker("+people_id.to_s+")\n" + e.message  + "\n" + e.backtrace.inspect
     end
   end
 end
