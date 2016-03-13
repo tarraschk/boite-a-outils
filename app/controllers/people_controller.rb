@@ -5,6 +5,7 @@ class PeopleController < SignedInController
 
   def authorize_person_controller!
     if @person
+      return true if current_user.root
       unless current_person.people_id.in?([@person.parent_id, @person.people_id])
         render status: 401 and return
       end

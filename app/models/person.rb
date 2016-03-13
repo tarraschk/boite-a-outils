@@ -14,7 +14,7 @@ class Person < ActiveRecord::Base
 
   accepts_nested_attributes_for :home_address
 
-  validates :people_id, uniqueness: true, unless: :skip_callbacks
+  validates :people_id, uniqueness: true, allow_blank: true, unless: :skip_callbacks
 
   after_create  :get_parent_id
 
@@ -45,7 +45,7 @@ class Person < ActiveRecord::Base
 
     client = NationBuilderClient.new
 
-    unless (changed.map(&:to_s) & %w(email first_name last_name parent_id phone mobile tags)).empty?
+    if (changed.map(&:to_s) & %w(email first_name last_name parent_id phone mobile tags)).present? || people_id.nil?
       params = attributes.slice(*%w(email first_name last_name parent_id phone mobile))
       params.keys.each do |key|
         params[key] = '' if params[key].nil?
@@ -68,11 +68,19 @@ class Person < ActiveRecord::Base
           end
         end
       else
-        new_tags = JSON.parse(changes['tags'][1])
-        r = client.call(:people, :create, person: params)
+        new_tags = changes['tags'] ? JSON.parse(changes['tags'][1]) : []
+        begin
+          r = client.call(:people, :create, person: params)
+        rescue => e
+          Person.skip_callbacks = true
+          update(nation_builder_error: 'Une erreur est survenue')  #TODO see what errors look like
+          Person.skip_callbacks = false
+          return 
+        end
 
         Person.skip_callbacks = true
         update(people_id: r['person']['id'])
+        # update(people_id: r['person']['id'], nation_builder_error: r['error'])  #TODO see what errors look like
         Person.skip_callbacks = false
 
         new_tags.each do |tag|

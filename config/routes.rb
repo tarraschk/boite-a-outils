@@ -3,8 +3,8 @@ require 'sidekiq/web'
 Rails.application.routes.draw do
   resources :addresses
   resources :people do
-    post    'add_tag',    on: :member
-    delete  'remove_tag', on: :member
+    post    'add_tag',                on: :member
+    delete  'remove_tag',             on: :member
   end
   devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }
 
