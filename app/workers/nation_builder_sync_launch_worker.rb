@@ -7,7 +7,8 @@ class NationBuilderSyncLaunchWorker
     last_synchronization.updated_at = Time.now
 
     client = NationBuilderClient.new
-    params = last_updated_at ? [:search, updated_since: last_updated_at, limit: 100] : [:index, limit: 100]
+    params = last_updated_at ? [:search, updated_since: last_updated_at.strftime "%Y-%m-%dT%H:%M:%S%z", limit: 100] : [:index, limit: 100]
+    puts params
     paginator = NationBuilder::Paginator.new(client, client.call(:people, *params))
     while paginator.next?
       paginator.body['results'].each do |result|
