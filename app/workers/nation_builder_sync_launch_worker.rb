@@ -22,7 +22,9 @@ class NationBuilderSyncLaunchWorker
         retry
       end
     end
-
+    paginator.body['results'].each do |result|
+      NationBuilderSyncWorker.perform_async(result['id'])
+    end
     Synchronization.record_timestamps = false
     last_synchronization.save
 
