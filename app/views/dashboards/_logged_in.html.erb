@@ -120,9 +120,7 @@
 
     $("#button-add-contact").on("click", function() {
       var blankPerson = new StaticFiles.Models.Person();
-      if (window.personView != undefined) {
-        window.personView.unbind();
-      }
+      window.stopZombies(window.personView);
       window.personView = new StaticFiles.Views.People.NewView({el: '#person', model: blankPerson});
       window.personView.render();
       $("#dashboard").addClass("hidden");
@@ -139,6 +137,13 @@
         window.peopleView.render();
       }
     });
+
+    window.stopZombies = function(objView){
+      if(typeof objView === "object"){
+        objView.undelegateEvents();
+        $(objView.el).empty();
+      }
+    };
 
   });
 </script>

@@ -12,11 +12,10 @@ class StaticFiles.Views.People.PersonView extends Backbone.View
     $("#dashboard").addClass("hidden")
     $("#person").addClass("hidden")
     $("#person-loading").removeClass("hidden")
-    selector = "a[data-id="+@model.id+"]"
+    selector = "a[href="+@model.id+"]"
     $("#people").find("li").removeClass("selected")
     $(selector).children("li").addClass("selected")
-    if window.personView != undefined
-      window.personView.unbind()
+    window.stopZombies(window.personView)
     window.personView = new StaticFiles.Views.People.ShowView({el: '#person', model: @model})
     window.personView.render()
     $("#person").removeClass("hidden")

@@ -5,7 +5,7 @@ class PeopleController < SignedInController
 
   def authorize_person_controller!
     if @person
-      unless current_person.people_id.in?([@person.parent_id, @person.people_id])
+      unless ((current_person.people_id == @person.parent_id) || (current_person.id == @person.id))
         render status: 401 and return
       end
     end
@@ -25,37 +25,37 @@ class PeopleController < SignedInController
   # GET /people/1
   # GET /people/1.json
   def show
-    @nb_person = NationBuilderClient.new.call(:people, :show, id: @person.people_id)['person']
-    @nb_person['people_id']   = @person.people_id
-    @nb_person['original_id'] = @person.id
+    #@nb_person = NationBuilderClient.new.call(:people, :show, id: @person.people_id)['person']
+    #@nb_person['people_id']   = @person.people_id
+    #@nb_person['original_id'] = @person.id
 
-    Person.skip_callbacks = true
-    person = Person.find_or_initialize_by(people_id: @nb_person['people_id'])
-    person.email          = @nb_person['email']
-    person.mobile         = @nb_person['mobile']
-    person.phone          = @nb_person['phone']
-    person.first_name     = @nb_person['first_name']
-    person.last_name      = @nb_person['last_name']
-    person.support_level  = @nb_person['support_level']
-    person.tags           = @nb_person['tags']
-    person.mandat         = @nb_person['mandat']
-
-    person.save
-
-    person.home_address ||= Address.new
-
-    if home_address = @nb_person['primary_address'] || @nb_person['home_address']
-      person.home_address.address1 = home_address['address1']
-      person.home_address.address2 = home_address['address2']
-      person.home_address.address3 = home_address['address3']
-      person.home_address.city     = home_address['city']
-      person.home_address.zip      = home_address['zip']
-      person.home_address.save
-    end
-
-    Person.skip_callbacks = false
-
-    render json: person.attributes.merge(profile_image_url_ssl: @nb_person['profile_image_url_ssl'], home_address: home_address)
+    #Person.skip_callbacks = true
+    # person = Person.find_or_initialize_by(people_id: @nb_person['people_id'])
+    # person.email          = @nb_person['email']
+    # person.mobile         = @nb_person['mobile']
+    # person.phone          = @nb_person['phone']
+    # person.first_name     = @nb_person['first_name']
+    # person.last_name      = @nb_person['last_name']
+    # person.support_level  = @nb_person['support_level']
+    # person.tags           = @nb_person['tags']
+    # person.mandat         = @nb_person['mandat']
+    #
+    # person.save
+    #
+    # person.home_address ||= Address.new
+    #
+    # if home_address = @nb_person['primary_address'] || @nb_person['home_address']
+    #   person.home_address.address1 = home_address['address1']
+    #   person.home_address.address2 = home_address['address2']
+    #   person.home_address.address3 = home_address['address3']
+    #   person.home_address.city     = home_address['city']
+    #   person.home_address.zip      = home_address['zip']
+    #   person.home_address.save
+    # end
+    #
+    # Person.skip_callbacks = false
+    person = Person.find_by_id(@person.id)
+    render json: person.attributes.merge(home_address: person.home_address)
   end
 
   # GET /people/new
@@ -101,7 +101,7 @@ class PeopleController < SignedInController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_person
-      @person = Person.find_by(people_id: params[:id])
+      @person = Person.find_by(id: params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

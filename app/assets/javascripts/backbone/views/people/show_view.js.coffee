@@ -12,8 +12,7 @@ class StaticFiles.Views.People.ShowView extends Backbone.View
     return this
 
   update_contacted: ->
-    if (parseInt(window.location.hash.substr(1)) == @model.get("people_id")) && (!window.params.semaphore.updates)
-      window.params.semaphore.updates = true
+    if (parseInt(window.location.hash.substr(1)) == @model.get("id"))
       @model.set("contacted", !@model.get("contacted"))
       @model.save({"contacted": @model.get("contacted")}, {
         patch: true,
@@ -22,15 +21,16 @@ class StaticFiles.Views.People.ShowView extends Backbone.View
           window.peopleView.unbind()
           window.peopleView.render()
           window.personView.unbind()
+          window.stopZombies(window.personView)
           window.personView = new StaticFiles.Views.People.ShowView({el: '#person', model: person})
           window.personView.render()
-          window.params.semaphore.updates = false
         error: (person, response) ->
-          window.params.semaphore.updates = false
+          window.stopZombies(window.personView)
       })
     return false
 
   edit_person: ->
+    window.stopZombies(window.personView)
     window.personView = new StaticFiles.Views.People.EditView({el: '#person', model: @model})
     window.personView.render()
     return false
