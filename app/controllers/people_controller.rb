@@ -74,8 +74,8 @@ class PeopleController < SignedInController
     @person = Person.new(person_params)
     @person.parent_id = current_person.people_id
     @person.tags = (JSON.parse(current_person.tags) & ["comite_membre", "comite_jeune", "comite_comite"]) | ["comite_boiteaoutils"]
-    @person.send_to_nation_builder
-    if @person.save
+    #@person.send_to_nation_builder
+    if @person.save_without_callbacks
       render json: @person
     else
       render json: @person.errors
