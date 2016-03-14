@@ -1,4 +1,3 @@
 task launch_worker: :environment do
   NationBuilderSyncLaunchWorker.perform_async
-  NationBuilderGetPeopleRecursiveLaunchWorker.perform_async
 end
