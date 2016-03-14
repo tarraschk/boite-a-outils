@@ -21,15 +21,6 @@ class StaticFiles.Views.People.PersonView extends Backbone.View
     window.personView.render()
     $("#person").removeClass("hidden")
     $("#person-loading").addClass("hidden")
-    if !@model.get("original_id") #this model has not yet been fetched from NationBuilder
-      @model.fetch
-        success: (person, response) ->
-          window.peopleCollection.add(person, {merge: true})
-          window.peopleView.unbind()
-          window.peopleView.render()
-          window.personView.unbind()
-          window.personView = new StaticFiles.Views.People.ShowView({el: '#person', model: person})
-          window.personView.render()
     return true
 
   check: () ->

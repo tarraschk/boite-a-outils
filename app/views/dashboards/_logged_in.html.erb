@@ -137,7 +137,6 @@
       success: function (peopleCollection, response) {
         window.peopleView = new StaticFiles.Views.People.IndexView({el: '#people', collection: peopleCollection});
         window.peopleView.render();
-        window.peopleCollection.fetchFromNationBuilder();
       }
     });
 
