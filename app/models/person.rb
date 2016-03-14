@@ -35,6 +35,15 @@ class Person < ActiveRecord::Base
     Person.skip_get_parent_id_callbacks = false
   end
 
+  def update_without_callbacks(person_params)
+    Person.skip_callbacks               = true
+    Person.skip_get_parent_id_callbacks = true
+    update(person_params)
+  ensure
+    Person.skip_callbacks               = false
+    Person.skip_get_parent_id_callbacks = false
+  end
+
   def send_to_nation_builder(send_to_nb = false)
     return unless people_id || send_to_nb
     return unless email || mobile || phone

@@ -88,7 +88,7 @@ class PeopleController < SignedInController
   # PATCH/PUT /people/1.json
   def update
     respond_to do |format|
-      if @person.update(person_params)
+      if @person.update_without_callbacks(person_params)
         format.html { redirect_to @person, notice: 'Person was successfully updated.' }
         format.json { render :show, status: :ok, location: @person }
       else
