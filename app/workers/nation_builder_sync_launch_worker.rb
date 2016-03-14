@@ -3,11 +3,11 @@ class NationBuilderSyncLaunchWorker
 
   def perform
     last_synchronization = Synchronization.find_or_initialize_by(event: 'people')
-    updated_at = last_synchronization.updated_at
+    last_updated_at = last_synchronization.updated_at
     last_synchronization.updated_at = Time.now
 
     client = NationBuilderClient.new
-    params = updated_at ? [:search, updated_since: updated_at, limit: 100] : [:index, limit: 100]
+    params = last_updated_at ? [:search, updated_since: last_updated_at, limit: 100] : [:index, limit: 100]
     paginator = NationBuilder::Paginator.new(client, client.call(:people, *params))
     while paginator.next?
       paginator.body['results'].each do |result|
