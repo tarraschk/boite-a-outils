@@ -8,8 +8,7 @@ class StaticFiles.Views.People.EditView extends Backbone.View
     "click #button-back-person" : "cancel"
 
   update: ->
-    if (parseInt(window.location.hash.substr(1)) == @model.get("people_id")) && (!window.params.semaphore.updates)
-      window.params.semaphore.updates = true
+    if (parseInt(window.location.hash.substr(1)) == @model.get("id")) && (true)
       @model.set({
         "first_name": $("input[name='first_name']").val(),
         "last_name": $("input[name='last_name']").val(),
@@ -26,21 +25,22 @@ class StaticFiles.Views.People.EditView extends Backbone.View
       }, {
         patch: true,
         success: (person, response) ->
+          person.set_fullname()
           window.peopleCollection.add(person, {merge: true})
           window.peopleView.unbind()
           window.peopleView.render()
-          window.personView.unbind()
+          window.stopZombies(window.personView)
           window.personView = new StaticFiles.Views.People.ShowView({el: '#person', model: person})
           window.personView.render()
-          window.params.semaphore.updates = false
         error: (person, response) ->
           alert "Erreur, veuillez vérifier vos données.<br/>Information technique : "+response
-          window.params.semaphore.updates = false
+          window.stopZombies(window.personView)
       })
     return false
 
   cancel: ->
     window.personView.unbind()
+    window.stopZombies(window.personView)
     window.personView = new StaticFiles.Views.People.ShowView({el: '#person', model: @model})
     window.personView.render()
     return false

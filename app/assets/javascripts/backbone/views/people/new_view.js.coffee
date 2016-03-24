@@ -23,6 +23,7 @@ class StaticFiles.Views.People.NewView extends Backbone.View
         window.peopleView.unbind()
         window.peopleView.render()
         window.personView.unbind()
+        window.stopZombies(window.personView)
         window.personView = new StaticFiles.Views.People.ShowView({el: '#person', model: person})
         window.personView.render()
         window.params.semaphore.updates = false
