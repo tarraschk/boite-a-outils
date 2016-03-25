@@ -271,7 +271,7 @@ Devise.setup do |config|
                       approval_prompt: '',
                       scope: 'email, profile, https://www.googleapis.com/auth/gmail.readonly',
                       include_granted_scopes: true,
-                      hd: 'juppe-2017.fr'
+                      hd: ['juppe-2017.fr', 'alainjuppe2017.fr']
                   }
 
 end
