@@ -13,7 +13,7 @@ class PeopleController < SignedInController
   end
 
   def index
-    @children = current_person.children.activated
+    @children = current_person.children.activated.order("contacted ASC NULLS FIRST")
     #@children = Array.new
     #current_person.children.each do |child|
     #  nb_person = NationBuilderClient.new.call(:people, :show, id: child.people_id)
