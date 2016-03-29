@@ -4,9 +4,7 @@ class NationBuilderImportWorker
 
   def perform(data)
     require 'csv'
-    arr_csv = CSV.read(data, :headers => :first_row)
-
-    arr_csv.each do | row |
+    CSV.foreach(data, :headers => :first_row) do | row |
       puts row
       puts "--- Current person: people_id " + row["nationbuilder_id"] + " --"
       instance_person = Person.where(people_id: row["nationbuilder_id"]).first_or_initialize
