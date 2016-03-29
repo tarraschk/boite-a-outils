@@ -12,6 +12,9 @@ class Person < ActiveRecord::Base
 
   has_one :home_address, class_name: Address, foreign_key: :person_id
 
+  scope :activated, -> { where(activated: true) }
+  scope :desactivated, -> { where(activated: false) }
+
   accepts_nested_attributes_for :home_address
 
   validates :people_id, uniqueness: true, unless: :skip_callbacks
@@ -103,5 +106,12 @@ class Person < ActiveRecord::Base
     "#{first_name} #{last_name}"
   end
 
+  def activate
+    update_without_callbacks(activated: true)
+  end
+
+  def desactivate
+    update_without_callbacks(activated: false)
+  end
 
 end
