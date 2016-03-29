@@ -11,12 +11,14 @@
     <% unless tools_controller? %>
       <% if user_signed_in? %>
         <div class="text-center">
-          <%= link_to '<button type="button" class="btn btn-default btn-md"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Accueil</button>'.html_safe, "http://mobilisation.alainjuppe2017.fr/", id: "button-home" %>
-          <%= link_to '<button type="button" class="btn btn-default btn-md"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Consulter / Envoyer des mails</button>'.html_safe, "https://mail.google.com/mail/?authuser=#{current_user.email}", id: "button-email-gmail", target: "_blank" %>
-          <%= link_to '<button type="button" class="btn btn-default btn-md"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> Contacter mon référent régional</button>'.html_safe, "#{@parent.email}", id: "button-email-referent-contact", target: "_blank" %>
-          <%= link_to '<button type="button" class="btn btn-default btn-md"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Contacter le support</button>'.html_safe, "support@alainjuppe2017.fr", id: "button-email-support-contact", target: "_blank" %>
+          <%= link_to '<button type="button" class="btn btn-default btn-md"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Accueil</button>'.html_safe, root_path, id: "button-home" %>
+          <%= link_to '<button type="button" class="btn btn-default btn-md"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Documents utiles</button>'.html_safe, "https://drive.google.com/drive/u/0/folders/0B7pE5HxfQVEDOGJWU3NLQ2oxM2s", id: "button-base-doc", target: "_blank" %>
           <%= link_to '<button type="button" class="btn btn-default btn-md"><span class="glyphicon glyphicon-bullhorn" aria-hidden="true"></span> Opération PAP</button>'.html_safe, tools_door_to_door_sign_up_path, id: "button-pap", target: "_blank" %>
           <%= link_to '<button type="button" class="btn btn-default btn-md"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Déconnexion</button>'.html_safe, destroy_user_session_path, :method => :delete %>
+          <br/>
+          <%= link_to '<button type="button" class="btn btn-default btn-md"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Consulter / Envoyer des mails</button>'.html_safe, "https://mail.google.com/mail/?authuser=#{current_user.email}", id: "button-email-gmail", target: "_blank" %>
+          <%= link_to '<button type="button" class="btn btn-default btn-md"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> Contacter mon référent régional</button>'.html_safe, "https://mail.google.com/mail/?authuser=#{current_user.email}&view=cm&fs=1&to=#{@parent.email}", id: "button-email-referent-contact", target: "_blank" %>
+          <%= link_to '<button type="button" class="btn btn-default btn-md"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Contacter le support</button>'.html_safe, "https://mail.google.com/mail/?authuser=#{current_user.email}&view=cm&fs=1&to=support@alainjuppe2017.fr", id: "button-email-support-contact", target: "_blank" %>
         </div>
       <% end %>
     <% end %>
