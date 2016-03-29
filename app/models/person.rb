@@ -16,10 +16,10 @@ class Person < ActiveRecord::Base
 
   validates :people_id, uniqueness: true, unless: :skip_callbacks
 
-  after_create  :get_parent_id
+  #after_create  :get_parent_id, unless: skip_callbacks
 
-  after_save    :send_to_nation_builder,  unless: :skip_callbacks
-  after_save    :get_parent_id,           unless: :skip_get_parent_id_callbacks
+  #after_save    :send_to_nation_builder,  unless: :skip_callbacks
+  #after_save    :get_parent_id,           unless: :skip_get_parent_id_callbacks
 
   def before_create
     self.created_at = Time.now
