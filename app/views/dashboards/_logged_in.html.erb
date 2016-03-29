@@ -3,8 +3,8 @@
   <h1>Mes contacts</h1>
   <div class="text-center">
     <%= link_to '<button type="button" class="btn btn-default btn-lg" data-toggle="tooltip" data-placement="bottom" title="Ajouter un contact"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>'.html_safe, "#", id: "button-add-contact" %>
-    <%= link_to '<button type="button" class="btn btn-default btn-lg" data-toggle="tooltip" data-placement="bottom" title="Envoyer un mail à tous les membres de mon comité"><span class="glyphicon glyphicon-send" aria-hidden="true"></span></button>'.html_safe, "#{current_user.email}&bcc=#{@children.map(&:email).join(",")}", id: "button-email-comite-contact", target: "_blank" %>
-    <%= link_to '<button type="button" class="btn btn-default btn-lg" data-toggle="tooltip" data-placement="bottom" title="Envoyer un mail aux personnes cochées ci-dessous"><span class="glyphicon glyphicon-list" aria-hidden="true"></span></button>'.html_safe, "#{current_user.email}&bcc=", id: "button-email-select-contact", target: "_blank" %>
+    <%= link_to '<button type="button" class="btn btn-default btn-lg" data-toggle="tooltip" data-placement="bottom" title="Envoyer un mail à tous les membres de mon comité"><span class="glyphicon glyphicon-send" aria-hidden="true"></span></button>'.html_safe, "#", id: "button-email-comite-contact", target: "_blank" %>
+    <%= link_to '<button type="button" class="btn btn-default btn-lg" data-toggle="tooltip" data-placement="bottom" title="Envoyer un mail aux personnes cochées ci-dessous"><span class="glyphicon glyphicon-list" aria-hidden="true"></span></button>'.html_safe, "#", id: "button-email-select-contact", target: "_blank" %>
     <br/><br/>
   </div>
   <div class="text-center loading">
@@ -66,8 +66,10 @@
     window.loadingGif.src = 'images/loading.gif';
 
     window.params = {
+      homeUrl: "<%= root_url %>",
       email: "<%= current_user.email %>",
       baseUrl: "https://mail.google.com/mail/?authuser=<%= current_user.email %>&view=cm&fs=1&to=",
+      baseUrlBcc: "https://mail.google.com/mail/?authuser=<%= current_user.email %>&view=cm&fs=1&bcc=",
       semaphore: {
         updates: false
       }
@@ -91,11 +93,6 @@
     };
 
     $(function() {
-      $("#button-email-comite-contact").attr("href", window.generateEmailLink($("#button-email-comite-contact").attr("href")));
-      $("#button-email-referent-contact").attr("href", window.generateEmailLink($("#button-email-referent-contact").attr("href")));
-      $("#button-email-support-contact").attr("href", window.generateEmailLink($("#button-email-support-contact").attr("href")));
-      $("#button-email-select-contact").attr("href", window.generateEmailLink($("#button-email-select-contact").attr("href")));
-
       //$("#button-home").on("click", function() {
       //  window.functionsAjxCrm.getHome();
       //  return false;
@@ -104,13 +101,31 @@
       $("#button-email-select-contact").on("click", function() {
         var emails=[];
         $("input[name='people-checkbox']:checked").each(function(){
-          emails.push(window.peopleCollection.get({"people_id" : $(this).val()}).get("email"));
+          emails.push(window.peopleCollection.get({"id" : $(this).val()}).get("email"));
         });
         if (emails.length > 0) {
-          window.open($("#button-email-select-contact").attr("href") + emails.join(","), "_blank");
+          generatedLink = window.params.baseUrlBcc + emails.join(",");
+          $("#button-email-select-contact").attr("href", generatedLink);
+          window.open(generatedLink, "_blank");
         }
         else {
           alert("Erreur : Veuillez d'abord au moins sélectionner une personne !");
+        }
+        return false;
+      });
+
+      $("#button-email-comite-contact").on("click", function() {
+        var emails=[];
+        window.peopleCollection.each(function(model, index){
+          emails.push(model.get("email"));
+        });
+        if (emails.length > 0) {
+          generatedLink = window.params.baseUrlBcc + emails.join(",");
+          $("#button-email-select-contact").attr("href", generatedLink);
+          window.open(generatedLink, "_blank");
+        }
+        else {
+          alert("Erreur : Veuillez d'abord ajouter une personne dans votre comité !");
         }
         return false;
       });
