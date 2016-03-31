@@ -65,12 +65,13 @@ body {
 
 #header {
   .btn {
-    border: none;
+    border: solid lightgrey 1px;
+    margin: 5px 5px;
   }
 
   button.btn:hover {
   }
-  span:hover {
+  span:hover, a:hover {
     background-color: transparent;
   }
 }

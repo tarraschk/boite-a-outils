@@ -4,8 +4,9 @@
         <br/>
         <h4>Actions</h4>
         <a id="button-email-person-contact" href="<%= email %>" target="_blank"><button type="button" class="btn btn-default btn-md" target="_blank"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Envoyer un Email</button></a><br/>
-        <a id="button-edit-person"><button type="button" class="btn btn-default btn-md" target="_blank"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Editer</button></a><br/>
         <a id="button-contacted-person"><button type="button" class="btn btn-default btn-md"><span class="glyphicon glyphicon-<%if(contacted){%>check<%}else{%>unchecked<%}%>" aria-hidden="true"></span> Personne contactée</button></a>
+        <a id="button-edit-person"><button type="button" class="btn btn-default btn-md" target="_blank"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Modifier la personne</button></a><br/>
+        <a id="button-delete-person" href="/people/<%= id %>"><button type="button" class="btn btn-default btn-md"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Supprimer la personne</button></a>
     </div>
     <div class="col-xs-8">
         <h4>Informations</h4>
@@ -44,5 +45,14 @@
 <script type="text/javascript">
     $(function() {
         $("#button-email-person-contact").attr("href", window.generateEmailLink($("#button-email-person-contact").attr("href")));
+        $("#button-delete-person").on("click", function() {
+                if(confirm("Attention : la suppression est une action irréversible. Êtes-vous sûr(e) de vouloir supprimer cette personne ?")){
+                    $.post(this.href, {_method:'delete'})
+                            .always(function(){window.location.href = window.params.homeUrl;});
+                    return false;
+                } else {
+                    return false;
+                }
+        });
     });
 </script>

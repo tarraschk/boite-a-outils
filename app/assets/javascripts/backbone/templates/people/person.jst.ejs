@@ -4,7 +4,7 @@
             <table>
                 <tr>
                     <td style="padding-right: 10px;">
-                        <input type="checkbox" name="people-checkbox" value="<%= people_id %>" data-email="<%= email %>" onclick='window.location.assign("#<%= people_id %>")' <%if(crm_checked){%>checked="checked"<%}%> >
+                        <input type="checkbox" name="people-checkbox" value="<%= id %>" data-email="<%= email %>" onclick='window.location.assign("#<%= id %>")' <%if(crm_checked){%>checked="checked"<%}%> >
                     </td>
                     <td>
                         <img class="media-object img-circle" src="<%= profile_image_url_ssl %>" alt="Photo de <%= full_name %>" width="32" height="32" />

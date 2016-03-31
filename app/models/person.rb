@@ -12,14 +12,17 @@ class Person < ActiveRecord::Base
 
   has_one :home_address, class_name: Address, foreign_key: :person_id
 
+  scope :activated, -> { where(activated: true) }
+  scope :desactivated, -> { where(activated: false) }
+
   accepts_nested_attributes_for :home_address
 
   validates :people_id, uniqueness: true, allow_blank: true, unless: :skip_callbacks
 
-  after_create  :get_parent_id
+  #after_create  :get_parent_id, unless: skip_callbacks
 
-  after_save    :send_to_nation_builder,  unless: :skip_callbacks
-  after_save    :get_parent_id,           unless: :skip_get_parent_id_callbacks
+  #after_save    :send_to_nation_builder,  unless: :skip_callbacks
+  #after_save    :get_parent_id,           unless: :skip_get_parent_id_callbacks
 
   def before_create
     self.created_at = Time.now
@@ -110,5 +113,12 @@ class Person < ActiveRecord::Base
     "#{first_name} #{last_name}"
   end
 
+  def activate
+    update_without_callbacks(activated: true)
+  end
+
+  def desactivate
+    update_without_callbacks(activated: false)
+  end
 
 end

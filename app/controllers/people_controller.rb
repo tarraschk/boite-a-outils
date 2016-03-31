@@ -14,7 +14,7 @@ class PeopleController < SignedInController
   end
 
   def index
-    @children = current_person.children
+    @children = current_person.children.activated.order("(contacted is null or contacted = false) DESC, first_name ASC")
     #@children = Array.new
     #current_person.children.each do |child|
     #  nb_person = NationBuilderClient.new.call(:people, :show, id: child.people_id)
@@ -96,6 +96,18 @@ class PeopleController < SignedInController
         format.html { render :edit }
         format.json { render json: @person.errors, status: :unprocessable_entity }
       end
+    end
+  end
+
+  def destroy
+    @person = current_person.children.activated.find_by(id: params[:id])
+    if @person
+      @person.desactivate
+      flash[:success] = "Personne supprimée avec succès."
+      render json: @person
+    else
+      flash[:danger] = "Erreur dans la suppression demandée. Veuillez contacter le support."
+      render json: {result: 'Not Found'}, status: '404'
     end
   end
 

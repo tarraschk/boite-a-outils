@@ -56,8 +56,8 @@ ActiveRecord::Schema.define(version: 20160313212514) do
     t.integer  "recruiter_id"
     t.integer  "user_id"
     t.string   "email"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
     t.string   "mobile"
     t.string   "first_name"
     t.string   "last_name"
@@ -68,6 +68,7 @@ ActiveRecord::Schema.define(version: 20160313212514) do
     t.string   "mandat"
     t.string   "phone"
     t.string   "nation_builder_error"
+    t.boolean  "activated",       default: true
   end
 
   add_index "people", ["parent_id"], name: "index_people_on_parent_id", using: :btree
