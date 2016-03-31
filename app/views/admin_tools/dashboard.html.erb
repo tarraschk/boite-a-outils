@@ -14,8 +14,11 @@
 
 </table>
 
+<button id="synchronize_all">Tout synchroniser</button>
+
 <script type="text/javascript">
-    $('#datatable').DataTable({
+    var table = $('#datatable');
+    table.DataTable({
         ajax: "<%= admin_tools_people_databable_path %>",
         pagingType: 'full_numbers',
         processing: true,
@@ -34,11 +37,27 @@
             data: {person_id: rowId},
             success: function(json){
                 if(json.success){
-                    alert('ok')
+                    alert('Le contact a été envoyé à Nation Builder');
                 }
                 else{
                     alert(json.error)
                 }
+                table.DataTable().reload()
+            }
+        })
+    });
+    $('#synchronize_all').click(function(){
+        $.ajax({
+            url: '/admin_tools/send_all_to_nation_builder',
+            type: 'POST',
+            success: function(json){
+                if(json.success){
+                    alert('Les contacts sont en cours de synchronisation avec Nation Builder')
+                }
+                else{
+                    alert(json.error)
+                }
+                table.DataTable().reload()
             }
         })
     })

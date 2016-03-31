@@ -25,4 +25,9 @@ class AdminToolsController < ApplicationController
     render status: :ok, json: {success: !!@person.people_id, error: @person.nation_builder_error}
   end
 
+  def send_all_to_nation_builder
+    NationBuilderSendAllNewPeopleWorker.perform_async
+    render status: :ok
+  end
+
 end

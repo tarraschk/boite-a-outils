@@ -33,6 +33,7 @@ Rails.application.routes.draw do
     get :dashboard
     get :people_databable
     post :send_to_nation_builder
+    post :send_all_to_nation_builder
   end
 
   # The priority is based upon order of creation: first created -> highest priority.

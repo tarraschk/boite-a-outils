@@ -82,14 +82,13 @@ class Person < ActiveRecord::Base
           r = client.call(:people, :create, person: params)
         rescue => e
           Person.skip_callbacks = true
-          update(nation_builder_error: 'Une erreur est survenue')  #TODO see what errors look like
+          update(nation_builder_error: JSON.parse(e.message)['code'])  #TODO see what errors look like
           Person.skip_callbacks = false
           return 
         end
 
         Person.skip_callbacks = true
         update(people_id: r['person']['id'])
-        # update(people_id: r['person']['id'], nation_builder_error: r['error'])  #TODO see what errors look like
         Person.skip_callbacks = false
 
         new_tags.each do |tag|
@@ -102,7 +101,7 @@ class Person < ActiveRecord::Base
   end
 
   def get_parent_id
-    if people_id
+    if people_id && !parent_id
       #NationBuilderGetParentIdWorker.perform_async(people_id)
     end
   end
