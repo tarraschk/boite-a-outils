@@ -1,0 +1,64 @@
+
+<table id="datatable" width="100%">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Prénom</th>
+            <th>Nom</th>
+            <th>Mail</th>
+            <th>Date de création</th>
+            <th>Erreur</th>
+            <th>Synchroniser</th>
+        </tr>
+    </thead>
+
+</table>
+
+<button id="synchronize_all">Tout synchroniser</button>
+
+<script type="text/javascript">
+    var table = $('#datatable');
+    table.DataTable({
+        ajax: "<%= admin_tools_people_databable_path %>",
+        pagingType: 'full_numbers',
+        processing: true,
+        serverSide: true,
+        "createdRow" : function( row, data, index ) {
+            // Add identity if it specified
+            row.id = data[0];
+        }
+    });
+
+    $('body').on('click', '.send_to_nation_builder_button', function(elem) {
+        var rowId = $(elem.target).parent().parent().attr('id');
+        $.ajax({
+            url: '/admin_tools/send_to_nation_builder',
+            type: 'POST',
+            data: {person_id: rowId},
+            success: function(json){
+                if(json.success){
+                    alert('Le contact a été envoyé à Nation Builder');
+                }
+                else{
+                    alert(json.error)
+                }
+                table.DataTable().reload()
+            }
+        })
+    });
+    $('#synchronize_all').click(function(){
+        $.ajax({
+            url: '/admin_tools/send_all_to_nation_builder',
+            type: 'POST',
+            success: function(json){
+                if(json.success){
+                    alert('Les contacts sont en cours de synchronisation avec Nation Builder')
+                }
+                else{
+                    alert(json.error)
+                }
+                table.DataTable().reload()
+            }
+        })
+    })
+</script>

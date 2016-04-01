@@ -3,8 +3,8 @@ require 'sidekiq/web'
 Rails.application.routes.draw do
   resources :addresses
   resources :people do
-    post    'add_tag',    on: :member
-    delete  'remove_tag', on: :member
+    post    'add_tag',                on: :member
+    delete  'remove_tag',             on: :member
   end
   devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }
 
@@ -33,6 +33,7 @@ Rails.application.routes.draw do
     get :dashboard
     get :people_databable
     post :send_to_nation_builder
+    post :send_all_to_nation_builder
   end
 
   # The priority is based upon order of creation: first created -> highest priority.
