@@ -20,7 +20,7 @@ class PeopleController < SignedInController
     #  nb_person = NationBuilderClient.new.call(:people, :show, id: child.people_id)
     #  @children << nb_person["person"]
     #end
-    render json: @children
+    render json: @children, :include => :home_address
   end
 
   # GET /people/1
@@ -77,7 +77,7 @@ class PeopleController < SignedInController
     @person.tags = (JSON.parse(current_person.tags) & ["comite_membre", "comite_jeune", "comite_comite"]) | ["comite_boiteaoutils"]
     #@person.send_to_nation_builder
     if @person.save_without_callbacks
-      render json: @person
+      render json: @person, :include => :home_address
     else
       render json: @person.errors
     end
@@ -119,7 +119,7 @@ class PeopleController < SignedInController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def person_params
-      permit_list = [:recruiter_id, :email, :phone, :mobile, :first_name, :last_name, :contacted, :mandat, :support_level, :tags, home_address_attributes: [:address1, :address2, :address3, :zip, :city]]
+      permit_list = [:recruiter_id, :email, :phone, :mobile, :first_name, :last_name, :contacted, :mandat, :support_level, :tags, :home_address_attributes => [:id, :address1, :address2, :address3, :zip, :city]]
       params.require(:person).permit(*permit_list)
     end
 end
