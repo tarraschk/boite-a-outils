@@ -36,7 +36,7 @@ class StaticFiles.Models.Person extends Backbone.Model
       t_address1 = if (this.get("home_address").address1 == null) then '' else  this.get("home_address").address1
       t_address2 = if (this.get("home_address").address2 == null) then '' else  this.get("home_address").address2
       t_address3 = if (this.get("home_address").address3 == null) then '' else  this.get("home_address").address3
-      t_zip = if (this.get("home_address").zip == null) then '' else  this.get("home_address").zip
+      t_zip = if ((this.get("home_address").zip == null)||(this.get("home_address").zip == this.get("home_address").city)) then '' else  this.get("home_address").zip
       t_city = if (this.get("home_address").city == null) then '' else  this.get("home_address").city
       this.set("home_address", {id: t_id, address1: t_address1, address2: t_address2, address3: t_address3, zip: t_zip, city: t_city})
     this.set("home_address_attributes", this.get("home_address"))
