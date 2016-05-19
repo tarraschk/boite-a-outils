@@ -268,7 +268,7 @@ Devise.setup do |config|
                   ENV['GOOGLE_APP_ID'],
                   ENV['GOOGLE_APP_SECRET'],
                   {
-                      approval_prompt: '',
+                      prompt: 'select_account',
                       scope: 'email, profile, https://www.googleapis.com/auth/gmail.readonly',
                       include_granted_scopes: true,
                       hd: ['juppe-2017.fr', 'alainjuppe2017.fr']
