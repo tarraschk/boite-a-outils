@@ -27,7 +27,7 @@ class NationBuilderImportWorker
       instance_person.home_address.address1 = row["primary_address1"].to_s
       instance_person.home_address.address2 = row["primary_address2"].to_s
       instance_person.home_address.address3 = row["primary_address3"].to_s
-      instance_person.home_address.city     = row["primary_city"].to_s
+      instance_person.home_address.city     = row["primary_zip"].to_s
       instance_person.home_address.zip      = row["primary_city"].to_s
       instance_person.home_address.save_without_callbacks
       puts instance_person.inspect

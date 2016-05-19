@@ -50,6 +50,17 @@
                     <input type="text" class="form-control" id="person-mobile" name="person[mobile]" placeholder="Mobile" value="<%= mobile %>" type="text"></input>
                 </p>
             </div>
+            <div class="form-group">
+                <p>
+                    <label for="person-homeaddress"><b>Adresse :</b></label>
+                    <input type="hidden" class="form-control" id="person_home_address_attributes_id" name="person[home_address_attributes][id]" value="<%= ('id' in home_address) ? home_address.id : '' %>"></input>
+                    <input type="text" class="form-control" id="person_home_address_attributes_address1" name="person[home_address_attributes][address1]" placeholder="Adresse - Ligne 1" value="<%= home_address.address1 %>"></input>
+                    <input type="text" class="form-control" id="person_home_address_attributes_address2" name="person[home_address_attributes][address2]" placeholder="Adresse - Ligne 2" value="<%= home_address.address2 %>"></input>
+                    <input type="text" class="form-control" id="person_home_address_attributes_address3" name="person[home_address_attributes][address3]" placeholder="Adresse - Ligne 3" value="<%= home_address.address3 %>"></input>
+                    <input type="text" class="form-control pull-left" id="person_home_address_attributes_zip" name="person[home_address_attributes][zip]" placeholder="Code postal" value="<%= home_address.zip %>" style="width:30%;"></input>
+                    <input type="text" class="form-control pull-right" id="person_home_address_attributes_city" name="person[home_address_attributes][city]" placeholder="Ville" value="<%= home_address.city %>" style="width:65%;"></input>
+                </p>
+            </div>
         </form>
     </div>
 </div>

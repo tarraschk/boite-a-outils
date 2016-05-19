@@ -12,33 +12,46 @@
         <h4>Informations</h4>
         <p>
             <b>Prénom :</b>
-            <%= first_name %>
+            <%= first_name !== '' ? first_name : '<span class="text-danger">A renseigner !</span>' %>
         </p>
 
         <p>
             <b>Nom :</b>
-            <%= last_name %>
+            <%= last_name !== '' ? last_name : '<span class="text-danger">A renseigner !</span>' %>
         </p>
 
         <p>
             <b>Email:</b>
-            <%= email %>
+            <%= email !== '' ? email : '<span class="text-danger">A renseigner !</span>' %>
         </p>
 
         <p>
             <b>Téléphone :</b>
-            <%= phone %>
+            <%= phone !== '' ? phone : '<span class="text-danger">A renseigner !</span>'%>
         </p>
 
         <p>
             <b>Mobile :</b>
-            <%= mobile %>
+            <%= mobile !== '' ? mobile : '<span class="text-danger">A renseigner !</span>' %>
+        </p>
+        <p>
+            <b>Adresse :</b>
+        <% if(home_address) {%>
+            <br/>
+            <%= home_address.address1 !== '' ? home_address.address1+'<br/>' : '' %>
+            <%= home_address.address2 !== '' ? home_address.address2+'<br/>' : '' %>
+            <%= home_address.address3 !== '' ? home_address.address3+'<br/>' : '' %>
+            <%= ((home_address.address1 == '') && (home_address.address2 == '') && (home_address.address3 =='')) ? '<span class="text-danger">Adresse à compléter !</span><br/>' : '' %>
+            <%= home_address.zip !== '' ? home_address.zip+' ' : '<span class="text-danger">Code postal à renseigner !</span><br/>' %>
+            <%= home_address.city !== '' ? home_address.city+'<br/>' : '<span class="text-danger">Ville à renseigner !</span><br/>' %>
+        <% } else { %>
+            <span class="text-danger">A renseigner !</p>
+        <% } %>
         </p>
     </div>
 </div>
 <div class="row">
     <div class="col-xs-12">
-
     </div>
 </div>
 

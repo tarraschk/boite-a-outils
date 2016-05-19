@@ -11,32 +11,43 @@
         <form class="form">
             <div class="form-group">
                 <p>
-                    <label for="person-first_name"><b>Prénom :</b></label>
-                    <input type="text" class="form-control" id="person-first_name" name="first_name" placeholder="Prénom" value="<%= first_name %>"></input>
+                    <label for="person_first_name"><b>Prénom :</b></label>
+                    <input type="text" class="form-control" id="person_first_name" name="person[first_name]" placeholder="Prénom" value="<%= first_name %>"></input>
                 </p>
             </div>
             <div class="form-group">
                 <p>
-                    <label for="person-last_name"><b>Nom :</b></label>
-                    <input type="text" class="form-control" id="person-last_name" name="last_name" placeholder="Nom" value="<%= last_name %>"></input>
+                    <label for="person_last_name"><b>Nom :</b></label>
+                    <input type="text" class="form-control" id="person_last_name" name="person[last_name]" placeholder="Nom" value="<%= last_name %>"></input>
                 </p>
             </div>
             <div class="form-group">
                 <p>
-                    <label for="person-email"><b>Email :</b></label>
-                    <input type="text" class="form-control" id="person-email" name="email" placeholder="Adresse mail" value="<%= email %>"></input>
+                    <label for="person_email"><b>Email :</b></label>
+                    <input type="text" class="form-control" id="person_email" name="person[email]" placeholder="Adresse mail" value="<%= email %>"></input>
                 </p>
             </div>
             <div class="form-group">
                 <p>
-                    <label for="person-phone"><b>Téléphone :</b></label>
-                    <input type="text" class="form-control" id="person-phone" name="phone" placeholder="Téléphone" value="<%= phone %>"></input>
+                    <label for="person_phone"><b>Téléphone :</b></label>
+                    <input type="text" class="form-control" id="person_phone" name="person[phone]" placeholder="Téléphone" value="<%= phone %>"></input>
                 </p>
             </div>
             <div class="form-group">
                 <p>
-                    <label for="person-mobile"><b>Mobile :</b></label>
-                    <input type="text" class="form-control" id="person-mobile" name="mobile" placeholder="Mobile" value="<%= mobile %>"></input>
+                    <label for="person_mobile"><b>Mobile :</b></label>
+                    <input type="text" class="form-control" id="person_mobile" name="person[mobile]" placeholder="Mobile" value="<%= mobile %>"></input>
+                </p>
+            </div>
+            <div class="form-group">
+                <p>
+                    <label for="person-homeaddress"><b>Adresse :</b></label>
+                    <input type="hidden" class="form-control" id="person_home_address_attributes_id" name="person[home_address_attributes][id]" value="<%= ('id' in home_address) ? home_address.id : '' %>"></input>
+                    <input type="text" class="form-control" id="person_home_address_attributes_address1" name="person[home_address_attributes][address1]" placeholder="Adresse - Ligne 1" value="<%= home_address.address1 %>"></input>
+                    <input type="text" class="form-control" id="person_home_address_attributes_address2" name="person[home_address_attributes][address2]" placeholder="Adresse - Ligne 2" value="<%= home_address.address2 %>"></input>
+                    <input type="text" class="form-control" id="person_home_address_attributes_address3" name="person[home_address_attributes][address3]" placeholder="Adresse - Ligne 3" value="<%= home_address.address3 %>"></input>
+                    <input type="text" class="form-control pull-left" id="person_home_address_attributes_zip" name="person[home_address_attributes][zip]" placeholder="Code postal" value="<%= home_address.zip %>" style="width:30%;"></input>
+                    <input type="text" class="form-control pull-right" id="person_home_address_attributes_city" name="person[home_address_attributes][city]" placeholder="Ville" value="<%= home_address.city %>" style="width:65%;"></input>
                 </p>
             </div>
         </form>
