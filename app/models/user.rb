@@ -7,7 +7,8 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :validatable, :omniauthable
 
-  has_one :person
+  has_many :user_to_person_relations
+  has_many :people, through: :user_to_person_relations
 
   def self.find_for_google_oauth2(access_token, _signed_in_resource = nil)
     data = access_token.info
@@ -32,18 +33,17 @@ class User < ActiveRecord::Base
         end
         person = Person.find_by(people_id: nb_people['person'] && nb_people['person']['id'])
         if person
-          person.user = User.create(
+          new_user = person.users.create(
               name:           data['name'],
-              provider:       access_token.provider,
+              #provider:       access_token.provider,
               email:          data['email'],
-              uid:            access_token.uid ,
+              #uid:            access_token.uid ,
               password:       'helloworld',
               access_token:   access_token['credentials']['token'],
               refresh_token:  access_token['credentials']['refresh_token'],
               expires_at:     access_token['credentials']['expired_at']
           )
-          person.save
-          return person.user
+          return new_user
         end
       end
     end
