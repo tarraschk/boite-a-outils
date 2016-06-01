@@ -5,7 +5,9 @@ class Person < ActiveRecord::Base
 
   belongs_to :parent,     class_name: Person, primary_key: :people_id
   belongs_to :recruiter,  class_name: Person, primary_key: :people_id
-  belongs_to :user
+
+  has_many :user_to_person_relations
+  has_many :users, through: :user_to_person_relations
 
   has_many :children,     class_name: Person, primary_key: :people_id, foreign_key: :parent_id
   has_many :recruitees,   class_name: Person, primary_key: :people_id, foreign_key: :recruiter_id
