@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
          :recoverable, :validatable, :omniauthable
 
   has_many :user_to_person_relations
-  has_one  :person, through: :user_to_person_relations
+  has_many :people, through: :user_to_person_relations
 
   def self.find_for_google_oauth2(access_token, _signed_in_resource = nil)
     data = access_token.info

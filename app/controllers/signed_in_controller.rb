@@ -51,6 +51,6 @@ class SignedInController < ApplicationController
 
   helper_method :current_person
   def current_person
-    @current_person ||= current_user && current_user.person
+    @current_person ||= current_user && current_user.people.first
   end
 end
