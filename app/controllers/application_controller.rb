@@ -13,4 +13,17 @@ class ApplicationController < ActionController::Base
   def tools_controller?
     false
   end
-end
+
+  rescue_from Exception do |exception|
+    Rollbar.critical(500, exception)
+    render_error 500, exception
+  end
+  rescue_from ActionController::RoutingError, ActionController::UnknownController, ::AbstractController::ActionNotFound, ActiveRecord::RecordNotFound do |exception|
+    Rollbar.critical(404, exception)
+    render_error 404, exception
+  end
+
+  private
+  def render_error(status)
+    render template: "errors/error_#{status}", status: status
+  end
