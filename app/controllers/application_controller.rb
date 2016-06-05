@@ -15,15 +15,15 @@ class ApplicationController < ActionController::Base
   end
 
   rescue_from Exception do |exception|
-    Rollbar.critical(500, exception)
     render_error 500, exception
   end
   rescue_from ActionController::RoutingError, ActionController::UnknownController, ::AbstractController::ActionNotFound, ActiveRecord::RecordNotFound do |exception|
-    Rollbar.critical(404, exception)
     render_error 404, exception
   end
 
   private
-  def render_error(status)
+  def render_error(status, exception)
+    Rollbar.critical(status, exception)
     render template: "errors/error_#{status}", status: status
   end
+end
