@@ -14,7 +14,11 @@ class PeopleController < SignedInController
   end
 
   def index
-    @children = current_person.children.activated.order("(contacted is null or contacted = false) DESC, last_name ASC")
+    if current_person.is_departemental_comitees_manager? && current_person.departement_comitees_manager
+      @children = Person.animators_for_department(current_person.departement_comitees_manager)
+    else
+      @children = current_person.children.activated.order("(contacted is null or contacted = false) DESC, last_name ASC")
+    end
     #@children = Array.new
     #current_person.children.each do |child|
     #  nb_person = NationBuilderClient.new.call(:people, :show, id: child.people_id)
