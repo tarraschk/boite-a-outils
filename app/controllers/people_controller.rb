@@ -16,6 +16,7 @@ class PeopleController < SignedInController
   def index
     if current_person.is_departemental_comitees_manager? && current_person.departement_comitees_manager
       @children = Person.animators_for_department(current_person.departement_comitees_manager)
+      @children |= current_person.children.activated.order("(contacted is null or contacted = false) DESC, last_name ASC")
     else
       @children = current_person.children.activated.order("(contacted is null or contacted = false) DESC, last_name ASC")
     end
@@ -24,7 +25,7 @@ class PeopleController < SignedInController
     #  nb_person = NationBuilderClient.new.call(:people, :show, id: child.people_id)
     #  @children << nb_person["person"]
     #end
-    render json: @children, :include => :home_address
+    render json: @children, :include => :home_address, :methods => [ :children, :children_count ]
   end
 
   # GET /people/1

@@ -141,4 +141,8 @@ class Person < ActiveRecord::Base
     Person.where('tags LIKE ?', "%comite_coordinateur_departement_#{home_address.zip}%")
   end
 
+  def children_count
+    children.count
+  end
+
 end

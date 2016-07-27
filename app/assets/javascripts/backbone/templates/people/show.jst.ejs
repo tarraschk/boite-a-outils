@@ -48,6 +48,16 @@
             <span class="text-danger">A renseigner !</p>
         <% } %>
         </p>
+        <% if (animateur) { %>
+        <p>
+            <b><%= children_count%> membre(s) dans son comité :</b>
+            <ul>
+                <% children.forEach(function(child){ %>
+                    <li><%= child.first_name %> <%= child.last_name %></li>
+                <% }); %>
+            </ul>
+        </p>
+        <%}%>
     </div>
 </div>
 <div class="row">
