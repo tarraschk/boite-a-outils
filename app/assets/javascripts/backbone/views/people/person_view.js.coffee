@@ -31,5 +31,6 @@ class StaticFiles.Views.People.PersonView extends Backbone.View
     return false
 
   render: ->
+    @model.is_animateur()
     @$el.html(@template(@model.toJSON() ))
     return this

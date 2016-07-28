@@ -17,6 +17,12 @@ class Person < ActiveRecord::Base
   scope :activated, -> { where(activated: true) }
   scope :desactivated, -> { where(activated: false) }
 
+  scope :animators_for_department, ->(departement) {
+        where('tags LIKE ?', '%comite_animateur\"%').
+        activated.order('(contacted is null or contacted = false) DESC, last_name ASC').joins(:home_address).
+        merge(Address.where('zip LIKE ?', "#{departement}%"))
+  }
+
   accepts_nested_attributes_for :home_address
 
   validates :people_id, uniqueness: true, allow_blank: true, unless: :skip_callbacks
@@ -121,6 +127,22 @@ class Person < ActiveRecord::Base
 
   def desactivate
     update_without_callbacks(activated: false)
+  end
+
+  def is_departemental_comitees_manager?
+    !!tags.match(/comite_coordinateur_departemental/)
+  end
+
+  def departement_comitees_manager
+    is_departemental_comitees_manager? && tags.match(/comite_coordinateur_departement_\d+/).to_s.gsub(/comite_coordinateur_departement_/, '').to_i
+  end
+
+  def departemental_manager
+    Person.where('tags LIKE ?', "%comite_coordinateur_departement_#{home_address.zip}%")
+  end
+
+  def children_count
+    children.count
   end
 
 end

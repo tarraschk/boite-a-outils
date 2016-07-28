@@ -14,7 +14,9 @@
         </div>
         <div class="media-body">
             <h4 class="media-heading"><%= full_name %></h4>
-            <small>Membre du comité</small> <%if(!contacted){%><small class="label label-primary pull-right">A CONTACTER</small><%}%>
+            <% if (animateur) { %><small class="label label-danger">ANIMATEUR - <%= children_count %> membre(s)</small>
+            <% } else { %><small>Membre du comité</small><%}%>
+            <%if(!contacted){%><small class="label label-primary pull-right">A CONTACTER</small><%}%>
         </div>
     </li>
 </a>
