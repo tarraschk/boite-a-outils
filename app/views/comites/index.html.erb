@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<%= link_to 'Ajouter un comité', new_comite_path, class: 'btn btn-default pull-right' %>
+
+<br>
+
+<h1>Liste des comités</h1>
+
+<table class="table table-responsive">
+  <thead>
+    <tr>
+      <th>N°</th>
+      <th>Type</th>
+      <th>Slug</th>
+      <th>Titre</th>
+      <th>Desc1</th>
+      <th>Desc2</th>
+      <th>GPS</th>
+      <th>Activé</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @comites.each do |comite| %>
+      <tr>
+        <td><%= comite.number %></td>
+        <td><%= comite.typecomite %></td>
+        <td><%= comite.slug %></td>
+        <td><%= comite.title %></td>
+        <td><%= comite.desc1 %></td>
+        <td><%= comite.desc2 %></td>
+        <td><%= comite.coordinates %></td>
+        <td><%= comite.active %></td>
+        <td><%= link_to 'Voir', comite %></td>
+        <td><%= link_to 'Editer', edit_comite_path(comite) %></td>
+        <td><%= link_to 'Supprimer', comite, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'Ajouter un comité', new_comite_path %>

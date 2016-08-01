@@ -1,6 +1,7 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
+  resources :comites
   resources :addresses
   resources :people do
     post    'add_tag',                on: :member
@@ -16,6 +17,10 @@ Rails.application.routes.draw do
   root 'dashboards#dashboard'
 
   get 'dashboard', to: 'dashboards#dashboard'
+  get 'map', to: 'map#index'
+  get 'map/comites_aj.json', to: 'map#comitesaj'
+  get 'map/comites_jaj.json', to: 'map#comitesjaj'
+  get 'map/comites_ajmonde.json', to: 'map#comitesajmonde'
 
   authenticate :user, lambda { |user| user.root } do
     mount Sidekiq::Web => '/sidekiq'

@@ -1,0 +1,52 @@
+<%= form_for(@comite) do |f| %>
+  <% if @comite.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@comite.errors.count, "error") %> prohibited this comite from being saved:</h2>
+
+      <ul>
+      <% @comite.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label "Nombre" %><br>
+    <%= f.number_field :number %>
+  </div>
+  <div class="field">
+    <%= f.label "Type comité" %><br>
+    <% Comite.typecomites.keys.each do |typecomite| %>
+        <%= f.radio_button :typecomite, typecomite %>
+        <%= f.label "typecomite_"+typecomite, typecomite.upcase %>
+    <% end %>
+  </div>
+  <div class="field">
+    <%= f.label "Slug" %><br>
+    <%= f.text_field :slug %>
+  </div>
+  <div class="field">
+    <%= f.label "Titre" %><br>
+    <%= f.text_field :title %>
+  </div>
+  <div class="field">
+    <%= f.label "Description - Ligne 1" %><br>
+    <%= f.text_field :desc1 %>
+  </div>
+  <div class="field">
+    <%= f.label "Description - Ligne 2" %><br>
+    <%= f.text_field :desc2 %>
+  </div>
+  <div class="field">
+    <%= f.label "Coordonnées GPS" %><br>
+    <%= f.text_field :coordinates %>
+  </div>
+  <div class="field">
+    <%= f.label "Activé" %><br>
+    <%= f.check_box :active %>
+  </div>
+  <div class="actions">
+    <%= f.submit "Valider" %>
+  </div>
+<% end %>

@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Number:</strong>
+  <%= @comite.number %>
+</p>
+
+<p>
+  <strong>Type:</strong>
+  <%= @comite.typecomite %>
+</p>
+
+<p>
+  <strong>Slug:</strong>
+  <%= @comite.slug %>
+</p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @comite.title %>
+</p>
+
+<p>
+  <strong>Desc1:</strong>
+  <%= @comite.desc1 %>
+</p>
+
+<p>
+  <strong>Desc2:</strong>
+  <%= @comite.desc2 %>
+</p>
+
+<p>
+  <strong>Coordinates:</strong>
+  <%= @comite.coordinates %>
+</p>
+
+<p>
+  <strong>Active:</strong>
+  <%= @comite.active %>
+</p>
+
+<%= link_to 'Editer', edit_comite_path(@comite) %> |
+<%= link_to 'Retour', comites_path %>

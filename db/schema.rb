@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160601172907) do
+ActiveRecord::Schema.define(version: 20160801164456) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +28,19 @@ ActiveRecord::Schema.define(version: 20160601172907) do
   end
 
   add_index "addresses", ["person_id"], name: "index_addresses_on_person_id", using: :btree
+
+  create_table "comites", force: :cascade do |t|
+    t.integer  "number"
+    t.integer  "typecomite"
+    t.string   "slug"
+    t.string   "title"
+    t.string   "desc1"
+    t.string   "desc2"
+    t.string   "coordinates"
+    t.boolean  "active"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
   create_table "committees", force: :cascade do |t|
     t.integer  "event_id"

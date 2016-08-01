@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset=utf-8 />
+  <title>Carte des comités - Alain Juppé</title>
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+  <script src='https://code.jquery.com/jquery-2.1.4.min.js'></script>
+  <script src='https://api.mapbox.com/mapbox.js/v2.2.3/mapbox.js'></script>
+  <link href='https://api.mapbox.com/mapbox.js/v2.2.3/mapbox.css' rel='stylesheet' />
+  <style>
+    body { margin:0; padding:0; }
+    #map { position:absolute; top:0; bottom:0; width:100%; }
+    .legend span {
+      display:block;
+      float: left;
+      padding-top: 2px;
+      height:20px;
+      width:20%;
+      font-size:9px;
+      color:#808080;
+      margin-right: 10px;
+    }
+    .legend label {
+      display: block;
+      text-align: left;
+      padding-bottom:5px;
+    }
+    .search-ui {
+      position:absolute;
+      top:20px;
+      right:20px;
+      font-size: 20px;
+      width: 375px;
+      z-index:1000;
+    }
+    @media all and (max-width: 480px)  {
+      .search-ui  {
+        width: 60%;
+      }
+    }
+    #comites_monde_list {
+      position:absolute;
+      top:60px;
+      right:20px;
+      font-size: 20px;
+      width: 375px;
+      z-index:1000;
+      color:#808080;
+    }
+    @media all and (max-width: 480px)  {
+      #comites_monde_list  {
+        width: 60%;
+      }
+    }
+  </style>
+</head>
+<body>
+<div id='legend' style='display:none;'>
+  <strong>Carte des comités AJ pour la France</strong>
+  <nav class='legend clearfix'>
+    <span style='background:#1087bf;'></span><label>Comité Avec Juppé</label>
+    <span style='background:#f86767;'></span><label>Comité Jeunes avec Juppé</label>
+  </nav>
+</div>
+
+<div id='map'></div>
+<div>
+  <input id='search' class='search-ui' placeholder='Rechercher une ville ou un code postal...' />
+  <select id="comites_monde_list">
+    <option value="0.600390625,47.66538735632654">...ou un comité Monde</option>
+    <option value="0.600390625,47.66538735632654">FRANCE</option>
+    <% @liste_pays.each do |pays| %>
+        <option value="<%= pays[1] %>"><%= pays[0] %></option>
+    <% end %>
+  </select>
+</div>
+<script>
+  var map;
+  $(document).ready(function() {
+    L.mapbox.accessToken = 'pk.eyJ1IjoibWFwYm94YWp4IiwiYSI6ImNpZ3V3dDB2czAwMzl2Zmtyb2JubXJyZGcifQ.lvgfI_Yjd5PRRoi2HB3GQQ';
+    // Create a map in the div #map
+    map = L.mapbox.map('map', 'mapboxajx.a6594fec', {maxZoom: 14}).setView([47.66538735632654, 0.600390625], 5).on('ready', function() { map.maxZoom = 14; });
+    var featureLayerAJ = L.mapbox.featureLayer()
+        .loadURL('comites_aj.json')
+        .addTo(map);
+    var featureLayerJAJ = L.mapbox.featureLayer()
+        .loadURL('comites_jaj.json')
+        .addTo(map);
+    var featureLayerAJMonde = L.mapbox.featureLayer()
+        .loadURL('comites_ajmonde.json')
+        .addTo(map);
+    map.legendControl.addLegend(document.getElementById('legend').innerHTML);
+    $('#search').keyup(search);
+    function search() {
+      var searchString = $('#search').val().toLowerCase();
+      featureLayerJAJ.setFilter(showState);
+      featureLayerAJ.setFilter(showState);
+      featureLayerAJMonde.setFilter(showState);
+      function showState(feature) {
+        return feature.properties.description
+                .toLowerCase()
+                .indexOf(searchString) !== -1;
+      }
+    }
+    $('#comites_monde_list').on('change', function() {
+      lng = $(this).val().split(',')[0];
+      lat = $(this).val().split(',')[1];
+      map.setView([lat,lng], 5);
+    });
+  });
+</script>
+</body>
+</html>
