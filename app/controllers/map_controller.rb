@@ -3,6 +3,7 @@ class MapController < ApplicationController
   # GET /maps
   def index
     @liste_pays = Comite.where(typecomite: 3, active:true).map { |x| [x.title.split("-", 2)[1].strip!, x.coordinates] }.sort_by{|k,v| k}.uniq { |k, v| k }
+    response.headers.except! 'X-Frame-Options'
     render 'map', :layout => false
   end
 
