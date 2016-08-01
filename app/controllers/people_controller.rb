@@ -80,7 +80,9 @@ class PeopleController < SignedInController
     @person = Person.new(person_params)
     @person.parent_id = current_person.people_id
     @person.tags = (JSON.parse(current_person.tags) & ["comite_membre", "comite_jeune", "comite_comite"]) | ["comite_boiteaoutils"]
-    #@person.send_to_nation_builder
+    if current_person.people_id == 2013
+      @person.send_to_nation_builder(true)
+    end
     if @person.save_without_callbacks
       render json: @person, :include => :home_address
     else
