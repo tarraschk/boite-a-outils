@@ -12,7 +12,33 @@ class StaticFiles.Views.People.NewView extends Backbone.View
     e.stopPropagation()
     window.params.semaphore.updates = true
     $("#form-new-contact").formValidation({
-
+      framework: 'bootstrap',
+      icon: {
+        valid: 'glyphicon glyphicon-ok',
+        invalid: 'glyphicon glyphicon-remove',
+        validating: 'glyphicon glyphicon-refresh'
+      },
+      fields: {
+        contact_infos: {
+          selector: '.contact_info',
+          validators: {
+            callback: {
+              message: 'Vous devez rentrer au moins un moyen de contact',
+              callback: (value, validator, $field) ->
+                isEmpty = true
+                $fields = validator.getFieldElements('contact_infos');
+                doCheck = (field) ->
+                  if($(field).val() != '')
+                    isEmpty = isEmpty && false
+                doCheck(field) for field in $fields
+                if(!isEmpty)
+                  validator.updateStatus('contact_infos', validator.STATUS_VALID, 'callback');
+                  return true;
+                return false
+            }
+          }
+        }
+      }
     })
     $("#form-new-contact").data('formValidation').validate()
     if $("#form-new-contact").data('formValidation').isValid()
