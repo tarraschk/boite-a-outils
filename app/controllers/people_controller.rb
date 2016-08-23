@@ -127,6 +127,6 @@ class PeopleController < SignedInController
     # Never trust parameters from the scary internet, only allow the white list through.
     def person_params
       permit_list = [:recruiter_id, :email, :phone, :mobile, :first_name, :last_name, :contacted, :mandat, :support_level, :tags, :home_address_attributes => [:id, :address1, :address2, :address3, :zip, :city]]
-      params.require(:person).permit(*permit_list)
+      params.require(:person).merge(contacted: true).permit(*permit_list)
     end
 end
