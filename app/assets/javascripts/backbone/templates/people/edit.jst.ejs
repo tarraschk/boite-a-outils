@@ -8,7 +8,7 @@
     </div>
     <div class="col-xs-8">
         <h4>Informations</h4>
-        <form class="form">
+        <form class="form" id="form-edit-contact" >
             <div class="form-group">
                 <p>
                     <label for="person_first_name"><b>Prénom :</b></label>
@@ -24,19 +24,19 @@
             <div class="form-group">
                 <p>
                     <label for="person_email"><b>Email :</b></label>
-                    <input type="text" class="form-control" id="person_email" name="person[email]" placeholder="Adresse mail" value="<%= email %>"></input>
+                    <input type="text" class="form-control contact_info" id="person_email" name="person[email]" placeholder="Adresse mail" value="<%= email %>"></input>
                 </p>
             </div>
             <div class="form-group">
                 <p>
                     <label for="person_phone"><b>Téléphone :</b></label>
-                    <input type="text" class="form-control" id="person_phone" name="person[phone]" placeholder="Téléphone" value="<%= phone %>"></input>
+                    <input type="text" class="form-control contact_info" id="person_phone" name="person[phone]" placeholder="Téléphone" value="<%= phone %>"></input>
                 </p>
             </div>
             <div class="form-group">
                 <p>
                     <label for="person_mobile"><b>Mobile :</b></label>
-                    <input type="text" class="form-control" id="person_mobile" name="person[mobile]" placeholder="Mobile" value="<%= mobile %>"></input>
+                    <input type="text" class="form-control contact_info" id="person_mobile" name="person[mobile]" placeholder="Mobile" value="<%= mobile %>"></input>
                 </p>
             </div>
             <div class="form-group">

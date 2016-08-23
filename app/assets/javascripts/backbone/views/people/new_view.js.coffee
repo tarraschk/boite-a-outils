@@ -34,8 +34,10 @@ class StaticFiles.Views.People.NewView extends Backbone.View
                 if(!isEmpty)
                   validator.updateStatus('contact_infos', validator.STATUS_VALID, 'callback');
                   return true;
-                return false
-            }
+                else
+                  validator.updateStatus('contact_infos', validator.STATUS_INVALID, 'callback');
+                  return false;
+              }
           }
         }
       }
