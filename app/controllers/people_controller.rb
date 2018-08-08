@@ -14,18 +14,23 @@ class PeopleController < SignedInController
   end
 
   def index
-    if current_person.is_departemental_comitees_manager? && current_person.departement_comitees_manager
-      @children = Person.animators_for_department(current_person.departement_comitees_manager)
-      @children |= current_person.children.activated.order("(contacted is null or contacted = false) DESC, last_name ASC")
-    else
-      @children = current_person.children.activated.order("(contacted is null or contacted = false) DESC, last_name ASC")
+    @children = Person.activated.where(%q(
+      tags SIMILAR TO '%comite_animateur%' AND people.id IN (?) OR
+      tags SIMILAR TO '%(comite_membre|comite_boiteaoutils)%'    AND people.parent_id = ?
+    ), current_person.get_animator_for_department.map(&:id), current_person.people_id).
+        joins(%q(
+            LEFT OUTER JOIN "user_to_person_relations"  ON "people"."id"  = "user_to_person_relations"."person_id"
+            LEFT OUTER JOIN "users"                     ON "users"."id"   = "user_to_person_relations"."user_id"
+          )).includes(:home_address, :children).select('DISTINCT ON (people.id) people.*, CASE WHEN users.id IS NOT NULL THEN true ELSE false END "user_connected"')
+
+    @children.each{|c| c.user_connected = c.attributes['user_connected']}
+    @children = @children.to_a.sort_by{|child| child.last_name}
+
+    respond_to do |format|
+      format.json do
+        render json: @children, :include => :home_address, :methods => [ :children, :children_count]
+      end
     end
-    #@children = Array.new
-    #current_person.children.each do |child|
-    #  nb_person = NationBuilderClient.new.call(:people, :show, id: child.people_id)
-    #  @children << nb_person["person"]
-    #end
-    render json: @children, :include => :home_address, :methods => [ :children, :children_count ]
   end
 
   # GET /people/1
@@ -126,7 +131,7 @@ class PeopleController < SignedInController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def person_params
-      permit_list = [:recruiter_id, :email, :phone, :mobile, :first_name, :last_name, :contacted, :mandat, :support_level, :tags, :home_address_attributes => [:id, :address1, :address2, :address3, :zip, :city]]
+      permit_list = [:recruiter_id, :email, :phone, :mobile, :first_name, :last_name, :contacted, :mandat, :support_level, :tags, :notes, :home_address_attributes => [:id, :address1, :address2, :address3, :zip, :city]]
       params.require(:person).merge(contacted: true).permit(*permit_list)
     end
 end

@@ -5,6 +5,13 @@ class SignedInController < ApplicationController
     redirect_to dashboard_path unless user_signed_in? || request.env['REQUEST_PATH'].in?(['/users/auth/google_oauth2/callback', dashboard_path])
   end
 
+  def authenticate_as
+    render status: 401 unless current_user.root
+    @user = User.find(params[:user_id])
+    sign_in @user
+    redirect_to dashboard_path
+  end
+
   def after_sign_in_path_for(resource)
     case resource
       when User

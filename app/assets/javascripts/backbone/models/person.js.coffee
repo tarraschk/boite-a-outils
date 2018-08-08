@@ -17,6 +17,8 @@ class StaticFiles.Models.Person extends Backbone.Model
     tags: null
     animateur: false
     children_count: 0
+    user_connected: false
+    notes: null
 
   initialize: ->
     this.set_fullname()

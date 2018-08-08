@@ -48,6 +48,7 @@ class StaticFiles.Views.People.EditView extends Backbone.View
           "email": $("input[name='person[email]']").val(),
           "phone": $("input[name='person[phone]']").val(),
           "mobile": $("input[name='person[mobile]']").val(),
+          "notes": $("#person_notes").val(),
           "home_address": {
             id: $("input[name='person[home_address_attributes][id]']").val(),
             address1: $("input[name='person[home_address_attributes][address1]']").val(),

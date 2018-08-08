@@ -14,9 +14,13 @@ Rails.application.routes.draw do
     get 'mails',    on: :member
   end
 
+  get 'authenticate_as' =>'signed_in#authenticate_as'
+
   root 'dashboards#dashboard'
 
   get 'dashboard', to: 'dashboards#dashboard'
+  get 'print_contact_list', to: 'dashboards#print_contact_list'
+  get 'print_contact_list_department', to: 'dashboards#print_contact_list_department'
   get 'map', to: 'map#index'
   get 'map/comites_aj.json', to: 'map#comitesaj'
   get 'map/comites_jaj.json', to: 'map#comitesjaj'

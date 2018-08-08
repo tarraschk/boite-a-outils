@@ -28,6 +28,8 @@ gem 'puma'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 gem 'rollbar'
+gem 'httparty'
+gem 'to_xls-rails'
 
 gem 'jquery-datatables-rails'
 gem 'ajax-datatables-rails'

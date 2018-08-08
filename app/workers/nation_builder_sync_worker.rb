@@ -12,7 +12,7 @@ class NationBuilderSyncWorker
 
     instance_person = Person.where(people_id: people_id).first_or_initialize
     instance_person.people_id     = person['id']
-    instance_person.email         = person['email'].to_s
+    instance_person.email         = person['emails'].map{|l| l['email_address']}.select{|e| e.match(/(@juppe-2017.fr|@alainjuppe2017.fr)/)}[0] || person['email'].to_s
     instance_person.first_name    = person['first_name'].to_s
     instance_person.last_name     = person['last_name'].to_s
     instance_person.parent_id     = person['parent_id']

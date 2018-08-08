@@ -11,10 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160801164456) do
+ActiveRecord::Schema.define(version: 20161016093715) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "pg_trgm"
 
   create_table "addresses", force: :cascade do |t|
     t.string   "address1"
@@ -28,6 +29,7 @@ ActiveRecord::Schema.define(version: 20160801164456) do
   end
 
   add_index "addresses", ["person_id"], name: "index_addresses_on_person_id", using: :btree
+  add_index "addresses", ["zip"], name: "index_addresses_on_zip", using: :btree
 
   create_table "comites", force: :cascade do |t|
     t.integer  "number"
@@ -56,6 +58,13 @@ ActiveRecord::Schema.define(version: 20160801164456) do
   add_index "committees", ["event_id"], name: "index_committees_on_event_id", using: :btree
   add_index "committees", ["people_id"], name: "index_committees_on_people_id", using: :btree
 
+  create_table "extract_download_logs", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "export_type"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
   create_table "gadget_files", force: :cascade do |t|
     t.string   "url"
     t.text     "html"
@@ -82,11 +91,14 @@ ActiveRecord::Schema.define(version: 20160801164456) do
     t.string   "phone"
     t.string   "nation_builder_error"
     t.boolean  "activated",            default: true
+    t.text     "notes"
+    t.string   "contact_mailing_list"
   end
 
   add_index "people", ["parent_id"], name: "index_people_on_parent_id", using: :btree
   add_index "people", ["people_id"], name: "index_people_on_people_id", using: :btree
   add_index "people", ["recruiter_id"], name: "index_people_on_recruiter_id", using: :btree
+  add_index "people", ["tags"], name: "index_people_on_tags", using: :gin
   add_index "people", ["user_id"], name: "index_people_on_user_id", using: :btree
 
   create_table "synchronizations", force: :cascade do |t|

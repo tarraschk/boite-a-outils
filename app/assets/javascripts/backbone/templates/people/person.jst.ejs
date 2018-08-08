@@ -17,6 +17,7 @@
             <% if (animateur) { %><small class="label label-danger">ANIMATEUR - <%= children_count %> membre(s)</small>
             <% } else { %><small>Membre du comité</small><%}%>
             <%if(!contacted){%><small class="label label-primary pull-right">A CONTACTER</small><%}%>
+            <%if(user_connected){%><small class="label label-primary">Animateur connecté à la BaO</small><%}%>
         </div>
     </li>
 </a>

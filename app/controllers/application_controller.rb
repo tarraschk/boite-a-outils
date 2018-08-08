@@ -14,12 +14,6 @@ class ApplicationController < ActionController::Base
     false
   end
 
-  rescue_from Exception do |exception|
-    render_error 500, exception
-  end
-  rescue_from ActionController::RoutingError, ActionController::UnknownController, ::AbstractController::ActionNotFound, ActiveRecord::RecordNotFound do |exception|
-    render_error 404, exception
-  end
 
   private
   def render_error(status, exception)

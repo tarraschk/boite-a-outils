@@ -1,4 +1,5 @@
 class Person < ActiveRecord::Base
+  attr_accessor :user_connected
   cattr_accessor :skip_callbacks
 
   cattr_accessor :skip_get_parent_id_callbacks
@@ -17,10 +18,16 @@ class Person < ActiveRecord::Base
   scope :activated, -> { where(activated: true) }
   scope :desactivated, -> { where(activated: false) }
 
-  scope :animators_for_department, ->(departement) {
-        where('tags LIKE ?', '%comite_animateur\"%').
+  scope :animators_for_department, ->(department) {
+    where('tags LIKE ?', '%comite_animateur\"%').
         activated.order('(contacted is null or contacted = false) DESC, last_name ASC').joins(:home_address).
-        merge(Address.where('zip LIKE ?', "#{departement}%"))
+        merge(Address.where('zip LIKE ?', "#{department}%"))
+  }
+
+  scope :regular_people_for_department, ->(department) {
+    where('tags !~ ?', '(comite_animateur|comite_membre|\"lec\")').
+        joins(:home_address).
+        merge(Address.where('zip LIKE ?', "#{department}%"))
   }
 
   accepts_nested_attributes_for :home_address
@@ -130,11 +137,11 @@ class Person < ActiveRecord::Base
   end
 
   def is_departemental_comitees_manager?
-    !!tags.match(/comite_coordinateur_departemental/)
+    !!tags.match(/coordinateur_departemental/)
   end
 
   def departement_comitees_manager
-    is_departemental_comitees_manager? && tags.match(/comite_coordinateur_departement_\d+/).to_s.gsub(/comite_coordinateur_departement_/, '').to_i
+    is_departemental_comitees_manager? && tags.match(/comite_coordinateur_departement_\d+/).to_s.gsub(/comite_coordinateur_departement_/, '').to_s
   end
 
   def departemental_manager
@@ -142,7 +149,59 @@ class Person < ActiveRecord::Base
   end
 
   def children_count
-    children.count
+    children.length
+  end
+
+  def get_animator_for_department
+    children = []
+    if is_departemental_comitees_manager? && departement_comitees_manager
+      children           += Person.animators_for_department(departement_comitees_manager).
+          joins(%q(
+            LEFT OUTER JOIN "user_to_person_relations"  ON "people"."id"  = "user_to_person_relations"."person_id"
+            LEFT OUTER JOIN "users"                     ON "users"."id"   = "user_to_person_relations"."user_id"
+          )).
+          uniq.
+          select('people.*, CASE WHEN users.id <> 0 THEN true ELSE false END "user_connected", contacted is null or contacted = false "already_contacted"')
+    end
+    children
+  end
+
+  def get_all_children
+    return @children if @children
+    children = []
+    if is_departemental_comitees_manager? && departement_comitees_manager
+      children           += Person.animators_for_department(departement_comitees_manager).
+          joins(%q(
+            LEFT OUTER JOIN "user_to_person_relations"  ON "people"."id"  = "user_to_person_relations"."person_id"
+            LEFT OUTER JOIN "users"                     ON "users"."id"   = "user_to_person_relations"."user_id"
+          )).
+          uniq.
+          select('people.*, CASE WHEN users.id <> 0 THEN true ELSE false END "user_connected", contacted is null or contacted = false "already_contacted"')
+    end
+
+    children           += self.children.activated.
+        joins(%q(
+          LEFT OUTER JOIN "user_to_person_relations"  ON "people"."id"  = "user_to_person_relations"."person_id"
+          LEFT OUTER JOIN "users"                     ON "users"."id"   = "user_to_person_relations"."user_id"
+        )).
+        uniq.
+        order("already_contacted DESC, last_name ASC").
+        select('people.*, CASE WHEN users.id <> 0 THEN true ELSE false END "user_connected", contacted is null or contacted = false "already_contacted"')
+
+    children.each{|c| c.user_connected = c.attributes['user_connected']}
+    @children = children
+  end
+
+  def get_not_comite_people
+    if is_departemental_comitees_manager? && departement_comitees_manager
+      Person.regular_people_for_department(departement_comitees_manager).includes(:home_address)
+    else
+      []
+    end
+  end
+
+  def self.get_all_coordinators
+    User.joins(:people).merge(Person.where('tags like ?', '%coordinateur_departemental%')).uniq.order(:email).pluck(:email, :id)
   end
 
 end
